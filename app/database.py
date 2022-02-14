@@ -22,7 +22,7 @@ def _createTables(con):
     con.execute("CREATE TABLE IF NOT EXISTS BR_CA( id INTEGER PRIMARY KEY AUTOINCREMENT ,kim TEXT,hr_representative TEXT,fax_number_hr_representative TEXT,management_level TEXT,work_phone_number_of_hr_representative TEXT, preferred_first_name TEXT,middle_initial TEXT,home_host_indicator TEXT,fulltime_parttime_equivalency TEXT,reports_to_kim TEXT,date_of_entry_into_company TEXT, date_entry DATE DEFAULT today )")
     con.execute("CREATE TABLE IF NOT EXISTS CB_CW( id INTEGER PRIMARY KEY AUTOINCREMENT ,kim TEXT,filler12 TEXT,filler13 TEXT,filler14 TEXT, filler15 TEXT,filler16 TEXT,filler17 TEXT,filler18 TEXT,filler19 TEXT,filler20 TEXT,filler21 TEXT,filler22 TEXT, filler23 TEXT,filler24 TEXT,filler25 TEXT,filler26 TEXT,filler27 TEXT,filler28 TEXT,filler29 TEXT,filler30 TEXT,filler31 TEXT,filler32 TEXT,filler33 TEXT, date_entry DATE DEFAULT today )")                 
 
-    con.execute("CREATE TABLE IF NOT EXISTS CX_DG( id INTEGER PRIMARY KEY AUTOINCREMENT ,kim TEXT,current_position_title TEXT,payment_type TEXT,plant_section TEXT,filler35 TEXT, indicator_for_disabled_person TEXT,social_security_number TEXT,state TEXT,internal_mail_code TEXT,state_for_preferred_mailing_address TEXT,phone_country_code TEXT, date_entry DATE DEFAULT today )")
+    con.execute("CREATE TABLE IF NOT EXISTS CX_DG( id INTEGER PRIMARY KEY AUTOINCREMENT ,kim TEXT,current_position_title TEXT,payment_type TEXT,plant_section TEXT,filler35 TEXT, indicator_for_disabled_person TEXT,social_security_number TEXT,state TEXT,state_for_preferred_mailing_address TEXT,phone_country_code TEXT, date_entry DATE DEFAULT today )")
     con.execute("CREATE TABLE IF NOT EXISTS DH_DQ( id INTEGER PRIMARY KEY AUTOINCREMENT ,kim TEXT,phone_country_code TEXT,phone_extension_and_company TEXT,fax_country_code TEXT,fax_area_code TEXT, fax_extension_and_company TEXT,mobile_country_code TEXT,mobile_area_code TEXT,mobile_number TEXT,empl_id TEXT,filler36 TEXT, date_entry DATE DEFAULT today )")
     con.execute("CREATE TABLE IF NOT EXISTS DR_EA( id INTEGER PRIMARY KEY AUTOINCREMENT ,kim TEXT,filler37 TEXT,bv_wechsel_ab TEXT,wohnhaft_bei TEXT,company_code_expat TEXT, currency TEXT,filler38 TEXT,year_of_goal_income TEXT,monthly_salary TEXT,delete_flag TEXT,filler39 TEXT, date_entry DATE DEFAULT today )")
     con.execute("CREATE TABLE IF NOT EXISTS EB_EK( id INTEGER PRIMARY KEY AUTOINCREMENT ,kim TEXT,grade_band TEXT,shift_indicator TEXT,employee_category TEXT,department_name TEXT, status_employee TEXT,code_dl_tv TEXT,grade TEXT,nacos_cost_center TEXT,wage_group TEXT,year_of_wage_group TEXT, date_entry DATE DEFAULT today )")
@@ -120,7 +120,7 @@ def loadInfo():
             con.execute('''INSERT INTO FJ_FS (kim,starting_of_timeframe_for_tax_data,end_of_timeframe_for_tax_data,type_of_timeframe_for_tax_data,date_entry)VALUES(?,?,?,?,?) ''',(row[0].value,row[120].value,row[120].value,row[120].value,date.today() ))
             con.execute('''INSERT INTO FT_GC (kim,starting_of_timeframe_for_tax_data,end_of_timeframe_for_tax_data,type_of_timeframe_for_tax_data,date_entry)VALUES(?,?,?,?,?) ''',(row[0].value,row[120].value,row[120].value,row[120].value,date.today() ))
             con.execute('''INSERT INTO GD_GM (kim,starting_of_timeframe_for_tax_data,end_of_timeframe_for_tax_data,type_of_timeframe_for_tax_data,date_entry)VALUES(?,?,?,?,?) ''',(row[0].value,row[120].value,row[120].value,row[120].value,date.today() ))
-            con.execute('''INSERT INTO GN_GW (kim,permanent_residence,wage_and_salary_group,diversity,executive_bonus,number_of_monthly_base_salary,structure_code,dept_id,full_time_equivalent,bonus_payout,filler54,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ''',(row[0].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,date.today() ))
+            con.execute('''INSERT INTO GN_GW (kim,permanent_residence,wage_and_salary_group,diversity,executive_bonus,number_of_monthly_base_salary,structure_code,dept_id,full_time_equivalent,bonus_payout,filler54,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ''',(row[0].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[203].value,row[120].value,row[120].value,date.today() ))
             con.execute('''INSERT INTO GX_HK (kim,executive_bonus,rabattkennzeichen,position_control_number,daimler_cost_center,last_name_passport,last_name_passport,last_name_passport,first_name_passport,iban,local_job_profile,irwwh,valid_by,buchungskreis,widersprecherkennzeichen,ivv_contract,ivv_risk_taker,ivv_control_unit,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ''',(row[0].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,row[120].value,date.today() ))
             conn.commit()
             #return 1
@@ -169,9 +169,6 @@ def saveInfo(data):
             #break
        #     return e
 #---------------------------------------------------------------------------------------------------------------------
-
-
-
 def find_employee(kim):
     conn = sqlite3.connect('database.sqlite')
     con = conn.cursor()

@@ -442,7 +442,7 @@ class Ui_MainWindow(object):
                 return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Could Not Find Employee')
 
     def clear(self):
-        #loadInfo()
+            loadInfo()
             self.kim.clear()
             self.fname.clear()
             self.lname.clear()

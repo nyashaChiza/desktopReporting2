@@ -87,19 +87,23 @@ def generate_report(start,stop):
 
 def process(wording, spacing):
     max_len = len(wording)
-    if max_len > spacing:
-        return wording[0:spacing]
+    
     padding = abs(spacing-max_len)
     for i in range(0, padding):
-        wording = " "+wording
+        wording = wording+" "
     return wording
  
 def gen(data):
 
     with open('T.txt','w', encoding = 'utf-8') as f:
-        for i in data[:30]:
+        for i in data:
             f.write('\n')
+            count =0
             for j in i:
-                f.writelines((process(str(j),12).replace('.','')).replace('-',''))
-
+                count = count + 1
+                if count == 66 and j[0] != ' ':
+                   # print(len(j))
+                    f.writelines((process(j[:45]+' '.lstrip(),12).replace('.','')).replace('-',''))
+                else:
+                    f.writelines((process(str(j),12).replace('.','')).replace('-',''))
 print(gen(generate_report('2022-02-13','2022-02-18')))

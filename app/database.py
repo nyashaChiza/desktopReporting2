@@ -257,7 +257,7 @@ def process(wording, spacing):
     
     padding = abs(spacing-max_len)
     for i in range(0, padding):
-        wording = wording+"*"
+        wording = wording+" "
     return wording
  
 def gen(data, title, spacing):

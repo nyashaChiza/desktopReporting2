@@ -10,7 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-#from test import dateCheck
+import os
 from .database import saveInfo,find_employee,updateInfo,generate_report,gen,dateCheck
 
 class Ui_MainWindow(object):
@@ -367,6 +367,7 @@ class Ui_MainWindow(object):
         self.pushButton_5.clicked.connect(self.update)
         self.pushButton_6.clicked.connect(self.clear)
         self.saveButton.clicked.connect(self.reports)
+        self.openButton.clicked.connect(self.openFunction)
 #------------------------------------- Functionality Mod End----------------------------------------#
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -443,6 +444,11 @@ class Ui_MainWindow(object):
                          return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Information Could Not Be Saved')
             else:
                 return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Could Not Find Employee')
+    #---------------------------------------------------------------------------------------------------------------------
+
+    def openFunction(self):
+            path = os.path.abspath('Reports')
+            document = QtWidgets.QFileDialog.getOpenFileName(self.tabWidget,'Open A Report:',path, filter = 'Files (*.txt )')
 #---------------------------------------------------------------------------------------------------------------------
     def clear(self):
             #loadInfo()

@@ -106,7 +106,7 @@ def gen(data):
                     f.writelines((process(j[:45]+' '.lstrip(),12).replace('.','')).replace('-',''))
                 else:
                     f.writelines((process(str(j),12).replace('.','')).replace('-',''))
-#print(gen(generate_report('2000-10-10','2022-02-19')))
+print(gen(generate_report('2000-10-10','2022-02-19')))
 #---------------------------------------------------------------------------------------------------------------------
 def dateCheck(arg,value):
             result = []

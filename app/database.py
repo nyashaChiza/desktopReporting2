@@ -257,21 +257,23 @@ def process(wording, spacing):
     
     padding = abs(spacing-max_len)
     for i in range(0, padding):
-        wording = wording+"*"
+        wording = wording+" "
     return wording
  
 def gen(data, title, spacing):
     count =0
+    
     with open('Reports/'+title+'.txt','w', encoding = 'utf-8') as f:
         for i in data:
             f.write('\n')
+            count =0
             for j in i:
                 count = count + 1
                 if count == 66 and j[0] != ' ':
-                   
-                    f.writelines((process(j[:45]+' '.lstrip(),12+spacing).replace('.','')).replace('-',''))
+                   # print(len(j))
+                    f.writelines((process(j[:45]+' '.lstrip(),12).replace('.','')).replace('-',''))
                 else:
-                    f.writelines((process(str(j),12+spacing).replace('.','')).replace('-',''))
+                    f.writelines((process(str(j),12).replace('.','')).replace('-',''))
     return count
 #---------------------------------------------------------------------------------------------------------------------
 def dateCheck(arg,value):
@@ -290,7 +292,7 @@ def dateCheck(arg,value):
                 if maps[0] ==1:
                        result.append('-0')
                 else:
-                        result.append('')
+                        result.append('-')
                 if maps[1] ==1:
                        result.append('-0')
                 else:
@@ -300,7 +302,7 @@ def dateCheck(arg,value):
                 if maps[0] ==1:
                        result.append('-0')
                 else:
-                        result.append('')
+                        result.append('-')
                 if maps[1] ==1:
                        result.append('-0')
                 else:

@@ -106,4 +106,41 @@ def gen(data):
                     f.writelines((process(j[:45]+' '.lstrip(),12).replace('.','')).replace('-',''))
                 else:
                     f.writelines((process(str(j),12).replace('.','')).replace('-',''))
-print(gen(generate_report('2022-02-13','2022-02-18')))
+#print(gen(generate_report('2000-10-10','2022-02-19')))
+#---------------------------------------------------------------------------------------------------------------------
+def dateCheck(arg,value):
+            result = []
+            maps=[]
+            if len(value[0])==1:
+                maps.append(1)
+            else:
+                maps.append(0)
+            if len(value[1])== 1:
+                maps.append(1)
+            else:
+                maps.append(0)
+           
+            if arg == 'to':
+                if maps[0] ==1:
+                       result.append('0')
+                else:
+                        result.append('')
+                if maps[1] ==1:
+                       result.append('-0')
+                else:
+                        result.append('-')
+                return result[0]+value[2]+result[1]+value[0]+'-'+value[1]
+            else:
+                if maps[0] ==1:
+                       result.append('0')
+                else:
+                        result.append('')
+                if maps[1] ==1:
+                       result.append('-0')
+                else:
+                        result.append('-')
+               
+                return result[0]+value[2]+result[1]+value[0]+'-'+value[1]
+                        
+#---------------------------------------------------------------------------------------------------------------------
+#print(dateCheck('ffrom',['1','2','2022']))

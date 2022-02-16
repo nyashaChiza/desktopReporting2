@@ -9,7 +9,9 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from .database import saveInfo,find_employee,updateInfo, loadInfo
+
+#from test import dateCheck
+from .database import saveInfo,find_employee,updateInfo,generate_report,gen,dateCheck
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -364,6 +366,7 @@ class Ui_MainWindow(object):
         self.pushButton_4.clicked.connect(self.clear)
         self.pushButton_5.clicked.connect(self.update)
         self.pushButton_6.clicked.connect(self.clear)
+        self.saveButton.clicked.connect(self.reports)
 #------------------------------------- Functionality Mod End----------------------------------------#
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -440,7 +443,7 @@ class Ui_MainWindow(object):
                          return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Information Could Not Be Saved')
             else:
                 return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Could Not Find Employee')
-
+#---------------------------------------------------------------------------------------------------------------------
     def clear(self):
             #loadInfo()
             self.kim.clear()
@@ -455,7 +458,6 @@ class Ui_MainWindow(object):
             self.email.clear()
             self.report.clear()
             self.current_position.clear()
-         
     def saveInformation(self):
                 if self.gender.currentText() =='Male':
                         gender =1
@@ -480,4 +482,27 @@ class Ui_MainWindow(object):
                         return QtWidgets.QMessageBox.about(self.tabWidget,'Success','Employee Information Saved Successfully')
                 else:
                        return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Information Could Not Be Saved')
-
+#---------------------------------------------------------------------------------------------------------------------
+    def reports(self):
+            date1 = str(self.to.text()).split('/')
+            to2 = dateCheck('to',date1)
+            print(to2)
+            date2 = str(self.ffrom.text()).split('/') 
+            from2 = dateCheck('fromm',date2)
+            print(from2)
+            data= {
+                'title':self.title.text(),   
+                'from':from2,
+                'to':to2,
+                'spacing':int(0), 
+            }
+            print(data)
+            try:    
+                    if gen(generate_report(data.get('from'),data.get('to')),data.get('title'),data.get('spacing')) !=0:
+                        return QtWidgets.QMessageBox.about(self.tabWidget,'Success','Report Generated Saved Successfully')
+                    else:
+                        return QtWidgets.QMessageBox.about(self.tabWidget,'Error','No Data Was Saved During This Period')                            
+            except Exception as e:
+                    return QtWidgets.QMessageBox.about(self.tabWidget,'Error',e)
+                    
+#---------------------------------------------------------------------------------------------------------------------

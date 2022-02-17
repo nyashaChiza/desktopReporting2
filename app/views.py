@@ -11,7 +11,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 import os
+<<<<<<< HEAD
 from .database import saveInfo,find_employee,updateInfo,generate_report,gen,dateCheck,loadInfo
+=======
+from .database import saveInfo,find_employee,updateInfo,generate_report,gen,dateCheck
+>>>>>>> b549e994cddb240cf63fecb96e98a01c0c89c4fd
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -447,6 +451,11 @@ class Ui_MainWindow(object):
                          return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Information Could Not Be Saved')
             else:
                 return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Could Not Find Employee')
+    #---------------------------------------------------------------------------------------------------------------------
+
+    def openFunction(self):
+            path = os.path.abspath('Reports')
+            document = QtWidgets.QFileDialog.getOpenFileName(self.tabWidget,'Open A Report:',path, filter = 'Files (*.txt )')
 #---------------------------------------------------------------------------------------------------------------------
     def openFunction(self):
             path = os.path.abspath('Reports')

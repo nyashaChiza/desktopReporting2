@@ -259,6 +259,15 @@ def process(wording, spacing):
     for i in range(0, padding):
         wording = wording+" "
     return wording
+
+def process1(wording, spacing):
+    max_len = len(wording)
+    
+    padding = abs(92-max_len)
+    for i in range(0, padding):
+        wording = wording+" "
+    return wording
+
  
 def gen(data, title, spacing):
     count =0
@@ -269,9 +278,10 @@ def gen(data, title, spacing):
             count =0
             for j in i:
                 count = count + 1
+                
                 if count == 66 and j[0] != ' ':
-                   # print(len(j))
-                    f.writelines((process(j[:45]+' '.lstrip(),12).replace('.','')).replace('-',''))
+                   # print(j)
+                    f.writelines((process1(j[:45]+' '.lstrip(),12).replace('.','')).replace('-',''))
                 else:
                     f.writelines((process(str(j),12).replace('.','')).replace('-',''))
     return count
@@ -297,7 +307,7 @@ def dateCheck(arg,value):
                        result.append('-0')
                 else:
                         result.append('-')
-                return value[2]+result[0]+value[1]+result[1]+value[0]
+                return value[2]+result[0]+value[0]+result[1]+value[1]
             else:
                 if maps[0] ==1:
                        result.append('-0')
@@ -308,7 +318,7 @@ def dateCheck(arg,value):
                 else:
                         result.append('-')
                
-                return value[2]+result[0]+value[1]+result[1]+value[0]
+                return value[2]+result[0]+value[0]+result[1]+value[1]
                         
 #---------------------------------------------------------------------------------------------------------------------
 

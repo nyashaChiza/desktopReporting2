@@ -92,20 +92,39 @@ def process(wording, spacing):
     for i in range(0, padding):
         wording = wording+" "
     return wording
+def process1(wording, spacing):
+    max_len = len(wording)
+    
+    padding = abs(92-max_len)
+    for i in range(0, padding):
+        wording = wording+"*"
+    return wording
+def process2(wording):
+    max_len = len(wording)
+    if max_len < 8:
+        return '0'+wording
+    return wording
  
 def gen(data):
-
-    with open('T.txt','w', encoding = 'utf-8') as f:
+    count =0
+    
+    with open('Reports/tt.txt','w', encoding = 'utf-8') as f:
         for i in data:
             f.write('\n')
             count =0
             for j in i:
                 count = count + 1
-                if count == 66 and j[0] != ' ':
-                   # print(len(j))
-                    f.writelines((process(j[:45]+' '.lstrip(),12).replace('.','')).replace('-',''))
+                if count == 9:
+                  #  print('date:',(process2(str(j))))
+                    f.writelines((process(process2(str(j)),12)))
+                elif count == 66 and j[0] != ' ':
+               #     print(len('NicoleDaniels@atlantisfoundriescom         ***********************************************'))
+                    f.writelines((process1(j[:45]+' '.lstrip(),12).replace('.','')).replace('-',''))
                 else:
                     f.writelines((process(str(j),12).replace('.','')).replace('-',''))
+    return count
+#---------------------------------------------------------------------------------------------------------------------
+
 print(gen(generate_report('2000-10-10','2022-02-19')))
 #---------------------------------------------------------------------------------------------------------------------
 def dateCheck(arg,value):

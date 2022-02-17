@@ -10,8 +10,8 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-#from test import dateCheck
-from .database import saveInfo,find_employee,updateInfo,generate_report,gen,dateCheck
+import os
+from .database import saveInfo,find_employee,updateInfo,generate_report,gen,dateCheck,loadInfo
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -367,6 +367,7 @@ class Ui_MainWindow(object):
         self.pushButton_5.clicked.connect(self.update)
         self.pushButton_6.clicked.connect(self.clear)
         self.saveButton.clicked.connect(self.reports)
+        self.openButton.clicked.connect(self.openFunction)
 #------------------------------------- Functionality Mod End----------------------------------------#
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -417,8 +418,11 @@ class Ui_MainWindow(object):
         self.pushButton_5.setText(_translate("MainWindow", "Update"))
         self.pushButton_6.setText(_translate("MainWindow", "Clear Form"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Update Employee"))
-    
+#---------------------------------------------------------------------------------------------------------------------    
     def update(self):
+            if len(self.kim_2.text()) == 0 or len(self.fname_2.text())== 0 or len(self.current_position_2.text()) == 0 or len(self.report_2.text())== 0 or len(self.employee_group_2.text())== 0 or len(self.personal_number_2.text()) == 0:
+                return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Please Provide Responses For All The Fields')
+
             kim = 0
             kim = str(self.kim_2.text())
             
@@ -444,21 +448,48 @@ class Ui_MainWindow(object):
             else:
                 return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Could Not Find Employee')
 #---------------------------------------------------------------------------------------------------------------------
+    def openFunction(self):
+            path = os.path.abspath('Reports')
+            document = QtWidgets.QFileDialog.getOpenFileName(self.tabWidget,'Open A Report:',path, filter = 'Files (*.txt )')
+#---------------------------------------------------------------------------------------------------------------------
+    def formCheck(self, option, data):
+            data = {
+                'kim': self.kim.text(),
+                'fname':self.fname.text(),
+                'lname':self.lname.text(),
+                'bdate':self.birthday.text(),
+                'date_of_entry':self.date_of_entry.text(),
+                'personal_number':self.personal_number.text(),
+                'employee_group':self.employee_group.text(),
+                'etype':self.employement_type.text(),
+                'hr_level':self.hr_level.text(),
+                'temail':self.email.text(),
+                'report':self.report.text(),
+                'position':self.current_position.text()
+                }
+            if option ==1:
+                    return len(self.title.text()) >0 and len(self.spacing.text())> 0
+            elif option ==2:
+                    return len(self.kim.text()) > 0 and len(self.fname.text())> 0 and len(self.lname.text()) > 0 and len(self.hr_level.text())> 0 and len(self.email.text()) > 0 and len(self.report.text())> 0 and len(self.lname.text()) > 0 and len(self.hr_level.text())> 0 and len(self.current_position.text()) > 0 and len(self.report.text())> 0 and len(self.lname.text()) > 0 and len(self.employee_group.text())> 0 and len(self.personal_number.text()) > 0 
+#---------------------------------------------------------------------------------------------------------------------
     def clear(self):
-            #loadInfo()
+            loadInfo()
+           # print('form check:',formCheck(1))
             self.kim.clear()
             self.fname.clear()
             self.lname.clear()
             self.birthday.clear()
             self.personal_number.clear()
             self.employee_group.clear()
-            self.personal_number.clear()
-            self.employee_group.clear()
             self.hr_level.clear()
             self.email.clear()
             self.report.clear()
             self.current_position.clear()
+#---------------------------------------------------------------------------------------------------------------------
     def saveInformation(self):
+                
+                if len(self.kim.text()) == 0 or len(self.fname.text())== 0 or len(self.current_position.text()) == 0 or len(self.report.text())== 0 or len(self.employee_group.text())== 0 or len(self.personal_number.text()) == 0:
+                    return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Please Provide Responses For All The Fields')
                 if self.gender.currentText() =='Male':
                         gender =1
                 else:
@@ -469,7 +500,7 @@ class Ui_MainWindow(object):
                 'fname':self.fname.text(),
                 'lname':self.lname.text(),
                 'bdate':self.birthday.text(),
-                'date_of_entry':self.birthday.text(),
+                'date_of_entry':self.date_of_entry.text(),
                 'personal_number':self.personal_number.text(),
                 'employee_group':self.employee_group.text(),
                 'etype':self.employement_type.text(),
@@ -478,12 +509,16 @@ class Ui_MainWindow(object):
                 'report':self.report.text(),
                 'position':self.current_position.text()
                 }
+               
                 if saveInfo(data) ==1:
                         return QtWidgets.QMessageBox.about(self.tabWidget,'Success','Employee Information Saved Successfully')
                 else:
                        return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Information Could Not Be Saved')
 #---------------------------------------------------------------------------------------------------------------------
     def reports(self):
+            if len(self.title.text()) == 0 or len(self.spacing.text())== 0 :
+                return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Please Provide Responses For All The Fields')
+
             date1 = str(self.to.text()).split('/')
             to2 = dateCheck('to',date1)
             print(to2)

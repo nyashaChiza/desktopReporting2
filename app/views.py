@@ -11,11 +11,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 import os
-<<<<<<< HEAD
-from .database import saveInfo,find_employee,updateInfo,generate_report,gen,dateCheck,loadInfo
-=======
-from .database import saveInfo,find_employee,updateInfo,generate_report,gen,dateCheck
->>>>>>> b549e994cddb240cf63fecb96e98a01c0c89c4fd
+from database import saveInfo,find_employee,updateInfo,generate_report,gen,dateCheck,loadInfo,createConnection
+
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -451,39 +449,11 @@ class Ui_MainWindow(object):
                          return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Information Could Not Be Saved')
             else:
                 return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Could Not Find Employee')
-    #---------------------------------------------------------------------------------------------------------------------
-
     def openFunction(self):
-            path = os.path.abspath('Reports')
+            path = os.path.abspath('../Reports')
             document = QtWidgets.QFileDialog.getOpenFileName(self.tabWidget,'Open A Report:',path, filter = 'Files (*.txt )')
-#---------------------------------------------------------------------------------------------------------------------
-    def openFunction(self):
-            path = os.path.abspath('Reports')
-            document = QtWidgets.QFileDialog.getOpenFileName(self.tabWidget,'Open A Report:',path, filter = 'Files (*.txt )')
-#---------------------------------------------------------------------------------------------------------------------
-    def formCheck(self, option, data):
-            data = {
-                'kim': self.kim.text(),
-                'fname':self.fname.text(),
-                'lname':self.lname.text(),
-                'bdate':self.birthday.text(),
-                'date_of_entry':self.date_of_entry.text(),
-                'personal_number':self.personal_number.text(),
-                'employee_group':self.employee_group.text(),
-                'etype':self.employement_type.text(),
-                'hr_level':self.hr_level.text(),
-                'temail':self.email.text(),
-                'report':self.report.text(),
-                'position':self.current_position.text()
-                }
-            if option ==1:
-                    return len(self.title.text()) >0 and len(self.spacing.text())> 0
-            elif option ==2:
-                    return len(self.kim.text()) > 0 and len(self.fname.text())> 0 and len(self.lname.text()) > 0 and len(self.hr_level.text())> 0 and len(self.email.text()) > 0 and len(self.report.text())> 0 and len(self.lname.text()) > 0 and len(self.hr_level.text())> 0 and len(self.current_position.text()) > 0 and len(self.report.text())> 0 and len(self.lname.text()) > 0 and len(self.employee_group.text())> 0 and len(self.personal_number.text()) > 0 
-#---------------------------------------------------------------------------------------------------------------------
     def clear(self):
-            loadInfo()
-           # print('form check:',formCheck(1))
+           # loadInfo()
             self.kim.clear()
             self.fname.clear()
             self.lname.clear()
@@ -547,6 +517,17 @@ class Ui_MainWindow(object):
                     else:
                         return QtWidgets.QMessageBox.about(self.tabWidget,'Error','No Data Was Saved During This Period')                            
             except Exception as e:
-                    return QtWidgets.QMessageBox.about(self.tabWidget,'Error',e)
+                    return QtWidgets.QMessageBox.about(self.tabWidget,'Error',str(e))
                     
 #---------------------------------------------------------------------------------------------------------------------
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    if not createConnection("database.sqlite"):
+        sys.exit(1)
+    app.setStyle('fusion')
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())

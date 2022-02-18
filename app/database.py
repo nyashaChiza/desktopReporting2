@@ -84,6 +84,133 @@ def updateInfo(data):
                     WHERE kim = ?'''
         con.execute(sql, [data.get('current_position'),data.get('kim')])
         conn.commit()
+#-----------------------------------------------------------------------------------------------------------------------------------
+#date update
+        sql =  ''' UPDATE A_I
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE J_S
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE T_AC
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE AD_AN
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE AM_AW
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE AX_BG
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE BH_BQ
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE BR_CA
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+
+        sql =  ''' UPDATE CB_CW
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE CX_DG
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE EB_EK
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE DH_DQ
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE DR_EA
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE EL_EY
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE EZ_FI
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+
+        sql =  ''' UPDATE FJ_FS
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE FT_GC
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE GD_GM
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE GN_GW
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE GX_HK
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+
+#-----------------------------------------------------------------------------------------------------------------------------------
+
         return 1
     except Exception as e:
         print(e)
@@ -91,7 +218,7 @@ def updateInfo(data):
 #-----------------------------------------------------------------------------------------------------------------------------------
 def loadInfo():
     from openpyxl import load_workbook
-    conn = sqlite3.connect('database.sqlite')
+    conn = sqlite3.connect('database.sqlite')    
     con = conn.cursor()  
     file = 'test.xlsx'
     wb_obj = load_workbook(filename=file)
@@ -307,7 +434,7 @@ def dateCheck(arg,value):
                        result.append('-0')
                 else:
                         result.append('-')
-                return value[2]+result[0]+value[0]+result[1]+value[1]
+                return value[2]+result[0]+value[1]+result[1]+value[0]
             else:
                 if maps[0] ==1:
                        result.append('-0')
@@ -318,7 +445,7 @@ def dateCheck(arg,value):
                 else:
                         result.append('-')
                
-                return value[2]+result[0]+value[0]+result[1]+value[1]
+                return value[2]+result[0]+value[1]+result[1]+value[0]
                         
 #---------------------------------------------------------------------------------------------------------------------
 

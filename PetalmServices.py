@@ -11,7 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 import os
-from database import saveInfo,find_employee,updateInfo,generate_report,gen,dateCheck,loadInfo,createConnection
+from database import saveInfo,find_employee,updateInfo,generate_report,gen,dateCheck,loadInfo,createConnection,dateCheck1,fix_input
 
 
 
@@ -429,31 +429,45 @@ class Ui_MainWindow(object):
             kim = str(self.kim_2.text())
             
             if find_employee(kim) ==1:
+
                 data = {
-                'kim': self.kim_2.text(),
-                'gender':self.gender_2.currentData() ,
-                'fname':self.fname_2.text(),
-                'lname':self.lname_2.text(),
-                'birthday':self.birthday_2.text(),
-                'date_of_entry':self.birthday_2.text(),
-                'personal_number':self.personal_number_2.text(),
-                'employee_group':self.employee_group_2.text(),
-                'hr_level':self.hr_level_2.text(),
-                'email':self.email_2.text(),
-                'report':self.report_2.text(),
-                'current_position':self.current_position_2.text()
+                'kim': fix_input('kim',self.kim_2.text()),
+                'gender':self.gender_2.currentData(),
+                'fname':fix_input('fn',self.fname_2.text()),
+                'lname':fix_input('ln',self.lname_2.text()),
+                'bdate':dateCheck1(self.birthday_2.text()),
+                'date_of_entry':dateCheck1(self.date_of_entry_2.text()),
+                'pnumber':fix_input('pn',self.personal_number_2.text()),
+                'employee_group':fix_input('eg',self.employee_group_2.text()),
+                'hr_level':fix_input('hr',self.hr_level_2.text()),
+                'email':fix_input('email',self.email_2.text()),
+                'report':fix_input('rk',self.report_2.text()),
+                'current_position':fix_input('pos',self.current_position_2.text())
                 }
+                self.kim.clear()
+                self.fname.clear()
+                self.lname.clear()
+                self.birthday.clear()
+                self.personal_number.clear()
+                self.employee_group.clear()
+                self.hr_level.clear()
+                self.email.clear()
+                self.report.clear()
+                self.current_position.clear()
+
                 if updateInfo(data) == 1:
                         return QtWidgets.QMessageBox.about(self.tabWidget,'Success','Employee Information Updated Successfully')
                 else:
                          return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Information Could Not Be Saved')
             else:
                 return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Could Not Find Employee')
+#---------------------------------------------------------------------------------------------------------------------
     def openFunction(self):
-            path = os.path.abspath('../Reports')
+            path = os.path.abspath('Reports')
             document = QtWidgets.QFileDialog.getOpenFileName(self.tabWidget,'Open A Report:',path, filter = 'Files (*.txt )')
+#---------------------------------------------------------------------------------------------------------------------
     def clear(self):
-           # loadInfo()
+            loadInfo()
             self.kim.clear()
             self.fname.clear()
             self.lname.clear()
@@ -473,13 +487,14 @@ class Ui_MainWindow(object):
                         gender =1
                 else:
                         gender = 0
+
                 data = {
                 'kim': self.kim.text(),
                 'gender':gender,
                 'fname':self.fname.text(),
                 'lname':self.lname.text(),
-                'bdate':self.birthday.text(),
-                'date_of_entry':self.date_of_entry.text(),
+                'bdate':dateCheck1(self.birthday.text()),
+                'date_of_entry':dateCheck1(self.date_of_entry.text()),
                 'personal_number':self.personal_number.text(),
                 'employee_group':self.employee_group.text(),
                 'etype':self.employement_type.text(),
@@ -488,7 +503,17 @@ class Ui_MainWindow(object):
                 'report':self.report.text(),
                 'position':self.current_position.text()
                 }
-               
+                self.kim.clear()
+                self.fname.clear()
+                self.lname.clear()
+                self.birthday.clear()
+                self.personal_number.clear()
+                self.employee_group.clear()
+                self.hr_level.clear()
+                self.email.clear()
+                self.report.clear()
+                self.current_position.clear()
+
                 if saveInfo(data) ==1:
                         return QtWidgets.QMessageBox.about(self.tabWidget,'Success','Employee Information Saved Successfully')
                 else:
@@ -510,9 +535,20 @@ class Ui_MainWindow(object):
                 'to':to2,
                 'spacing':int(0), 
             }
+			self.kim.clear()
+			self.fname.clear()
+			self.lname.clear()
+			self.birthday.clear()
+			self.personal_number.clear()
+			self.employee_group.clear()
+			self.hr_level.clear()
+			self.email.clear()
+			self.report.clear()
+			self.current_position.clear()
+
             print(data)
             try:    
-                    if gen(generate_report(data.get('from'),data.get('to')),data.get('title'),data.get('spacing')) !=0:
+                    if gen(generate_report(data.get('from'),data.get('to')),data.get('title'),data.get('spacing')) >0:
                         return QtWidgets.QMessageBox.about(self.tabWidget,'Success','Report Generated Saved Successfully')
                     else:
                         return QtWidgets.QMessageBox.about(self.tabWidget,'Error','No Data Was Saved During This Period')                            

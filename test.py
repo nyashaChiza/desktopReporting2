@@ -1,54 +1,23 @@
-def fix_input(option, word):
-    if option == 'fn' or option == 'ln':
-        mx = 30
-        wlen = len(word)
-        for x in range(0 ,(mx-wlen)):
-            word = word+' '
-        return word
-
-    elif option == 'kim' or option == 'rk':
-        mx = 15
-        wlen = len(word)
-        for x in range(0 ,(mx-wlen)):
-            word = word+' '
-        return word
-
-    elif option == 'pn':
-        mx = 4
-        wlen = len(word)
-        for x in range(0 ,(mx-wlen)):
-            word = word+' '
-        return word
-
-    elif option == 'pos':
-        mx = 65
-        wlen = len(word)
-        for x in range(0 ,(mx-wlen)):
-            word = word+' '
-        return word
-
-    elif option == 'eg':
-        return word[:1]
-
-    elif option == 'hr':
-        mx = 3
-        wlen = len(word)
-        for x in range(0 ,(mx-wlen)):
-            word = word+' '
-        return word
-
-    elif option == 'et':
-        mx = 3
-        wlen = len(word)
-        for x in range(0 ,(mx-wlen)):
-            word = word+' '
-        return word
-
-    elif option == 'email':
-        mx = 90
-        wlen = len(word)
-        for x in range(0 ,(mx-wlen)):
-            word = word+' '
-        return word
-    
-print(len(fix_input('email','nyasha')))
+def dateCheck1(value):
+            result = []
+            maps=[]
+            value = str(value).split('/')
+            print('date:',value)
+            if len(value[0])==1:
+                maps.append(1)
+            else:
+                maps.append(0)
+            if len(value[1])== 1:
+                maps.append(1)
+            else:
+                maps.append(0)
+            if maps[0] ==1:
+                       result.append('0')
+            else:
+                        result.append('')
+            if maps[1] ==1:
+                       result.append('0')
+            else:
+                        result.append('')
+            return result[0]+value[0]+result[1]+value[1]+value[2]
+print(dateCheck1('1/12/2015'))

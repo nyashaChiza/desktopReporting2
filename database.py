@@ -3,12 +3,13 @@
 import sys,sqlite3
 from datetime import date
 
+#-----------------------------------------------------------------------------------------------------------------------------------
 def createConnection(databaseName):
         conn = sqlite3.connect(databaseName)
         c = conn.cursor()
         _createTables(c)
         return c
-
+#-----------------------------------------------------------------------------------------------------------------------------------
 def _createTables(con):
     today = date.today()
     con.execute("CREATE TABLE IF NOT EXISTS A_I( id INTEGER PRIMARY KEY AUTOINCREMENT ,kim TEXT,sin TEXT,gender TEXT,first_name TEXT,last_name TEXT, last_name_prefix TEXT,academic_title TEXT,filler1 TEXT,birth_date DATE, date_entry DATE DEFAULT today )")
@@ -35,8 +36,6 @@ def _createTables(con):
     con.execute("CREATE TABLE IF NOT EXISTS GN_GW( id INTEGER PRIMARY KEY AUTOINCREMENT ,kim TEXT,permanent_residence TEXT,filler54 TEXT,wage_and_salary_group TEXT,diversity TEXT, executive_bonus TEXT,number_of_monthly_base_salary TEXT,structure_code TEXT,dept_id TEXT,full_time_equivalent TEXT,bonus_payout TEXT, date_entry DATE DEFAULT today )")
     con.execute("CREATE TABLE IF NOT EXISTS GX_HK( id INTEGER PRIMARY KEY AUTOINCREMENT ,kim TEXT,position_control_number TEXT,daimler_cost_center TEXT,last_name_passport TEXT,first_name_passport TEXT, executive_bonus TEXT,iban TEXT,local_job_profile TEXT,irwwh TEXT,buchungskreis TEXT,rabattkennzeichen TEXT,valid_by TEXT,widersprecherkennzeichen TEXT,ivv_contract TEXT,ivv_risk_taker TEXT,ivv_control_unit TEXT, date_entry DATE DEFAULT today )")
     con.close()
-
-
 #-----------------------------------------------------------------------------------------------------------------------------------
 def updateInfo(data):
     conn = sqlite3.connect('database.sqlite')
@@ -77,7 +76,7 @@ def updateInfo(data):
         sql =  ''' UPDATE BR_CA
         SET reports_to_kim = ?
                     WHERE kim = ?'''
-        con.execute(sql, [data.get('reports'),data.get('kim')])
+        con.execute(sql, [data.get('report'),data.get('kim')])
 
         sql =  ''' UPDATE CX_DG
         SET current_position_title = ?
@@ -218,7 +217,7 @@ def updateInfo(data):
 #-----------------------------------------------------------------------------------------------------------------------------------
 def loadInfo():
     from openpyxl import load_workbook
-    conn = sqlite3.connect('database.sqlite')    
+    conn = sqlite3.connect('database.sqlite')
     con = conn.cursor()  
     file = 'test.xlsx'
     wb_obj = load_workbook(filename=file)
@@ -351,7 +350,6 @@ def generate_report(start,stop):
     rows20 = con.fetchall()
     con.execute("SELECT position_control_number,daimler_cost_center,last_name_passport,first_name_passport,executive_bonus,iban,local_job_profile,irwwh,buchungskreis,rabattkennzeichen,valid_by,widersprecherkennzeichen,ivv_contract,ivv_risk_taker,ivv_control_unit FROM GX_HK Where date_entry BETWEEN date(?) and date(?)",[start,stop])
     rows21 = con.fetchall()
-    print('rows:',len(rows1))
     out = []
     for x in range(0,len(rows2)-1):
         data.extend(list(rows1[x]))
@@ -377,8 +375,8 @@ def generate_report(start,stop):
         data.extend(list(rows21[x]))
         out.append(data)
         data = []
-    return out
-
+    return [out,len(rows1)]
+#-----------------------------------------------------------------------------------------------------------------------------------
 def process(wording, spacing):
     max_len = len(wording)
     
@@ -386,7 +384,7 @@ def process(wording, spacing):
     for i in range(0, padding):
         wording = wording+" "
     return wording
-
+#-----------------------------------------------------------------------------------------------------------------------------------
 def process1(wording, spacing):
     max_len = len(wording)
     
@@ -394,24 +392,26 @@ def process1(wording, spacing):
     for i in range(0, padding):
         wording = wording+" "
     return wording
-
- 
+#-----------------------------------------------------------------------------------------------------------------------------------
 def gen(data, title, spacing):
-    count =0
-    
-    with open('Reports/'+title+'.txt','w', encoding = 'utf-8') as f:
-        for i in data:
-            f.write('\n')
-            count =0
-            for j in i:
-                count = count + 1
-                
-                if count == 66 and j[0] != ' ':
-                   # print(j)
-                    f.writelines((process1(j[:45]+' '.lstrip(),12).replace('.','')).replace('-',''))
-                else:
-                    f.writelines((process(str(j),12).replace('.','')).replace('-',''))
-    return count
+	count =0
+	if data[1] > 0:
+		with open('Reports/'+title+'.txt','w', encoding = 'utf-8') as f:
+			for i in data[0]:
+				f.write('\n')
+				count =0
+				for j in i:
+					count = count + 1
+					
+					if count == 66 and j[0] != ' ':
+					   # print(j)
+						f.writelines((process1(j[:45]+' '.lstrip(),12).replace('.','')).replace('-',''))
+					else:
+						f.writelines((process(str(j),12).replace('.','')).replace('-',''))
+		print('rows',count)
+		return count
+	else:
+		return 0
 #---------------------------------------------------------------------------------------------------------------------
 def dateCheck(arg,value):
             result = []
@@ -434,7 +434,7 @@ def dateCheck(arg,value):
                        result.append('-0')
                 else:
                         result.append('-')
-                return value[2]+result[0]+value[1]+result[1]+value[0]
+                return value[2]+result[1]+value[1]+result[0]+value[0]
             else:
                 if maps[0] ==1:
                        result.append('-0')
@@ -445,8 +445,7 @@ def dateCheck(arg,value):
                 else:
                         result.append('-')
                
-                return value[2]+result[0]+value[1]+result[1]+value[0]
-                        
+                return value[2]+result[1]+value[1]+result[0]+value[0]
 #---------------------------------------------------------------------------------------------------------------------
 def dateCheck1(value):
             result = []
@@ -470,7 +469,7 @@ def dateCheck1(value):
             else:
                         result.append('')
             return result[0]+value[0]+result[1]+value[1]+value[2]
-#---------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------
 def fix_input(option, word):
     if option == 'fn' or option == 'ln':
         mx = 30
@@ -524,6 +523,7 @@ def fix_input(option, word):
             word = word+' '
         return word
 #------------------------------------------------------------------------------------------------------
+
 
 
 

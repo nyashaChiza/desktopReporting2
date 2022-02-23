@@ -9,9 +9,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 import os
-from database import saveInfo,find_employee,updateInfo,generate_report,gen,dateCheck,loadInfo,createConnection,dateCheck1,fix_input
+from database import saveInfo,find_employee,updateInfo,generate_report,gen,dateCheck,loadInfo,createConnection,dateCheck1,fix_input, check_kim
 
 
 
@@ -19,6 +18,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1038, 808)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("icon/Petalm-logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        MainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -367,7 +369,7 @@ class Ui_MainWindow(object):
         self.pushButton_3.clicked.connect(self.saveInformation)
         self.pushButton_4.clicked.connect(self.clear)
         self.pushButton_5.clicked.connect(self.update)
-        self.pushButton_6.clicked.connect(self.clear)
+        self.pushButton_6.clicked.connect(self.clear2)
         self.saveButton.clicked.connect(self.reports)
         self.openButton.clicked.connect(self.openFunction)
 #------------------------------------- Functionality Mod End----------------------------------------#
@@ -444,17 +446,7 @@ class Ui_MainWindow(object):
                 'report':fix_input('rk',self.report_2.text()),
                 'current_position':fix_input('pos',self.current_position_2.text())
                 }
-                self.kim.clear()
-                self.fname.clear()
-                self.lname.clear()
-                self.birthday.clear()
-                self.personal_number.clear()
-                self.employee_group.clear()
-                self.hr_level.clear()
-                self.email.clear()
-                self.report.clear()
-                self.current_position.clear()
-
+                print(data)
                 if updateInfo(data) == 1:
                         return QtWidgets.QMessageBox.about(self.tabWidget,'Success','Employee Information Updated Successfully')
                 else:
@@ -464,7 +456,7 @@ class Ui_MainWindow(object):
 #---------------------------------------------------------------------------------------------------------------------
     def openFunction(self):
             path = os.path.abspath('Reports')
-            document = QtWidgets.QFileDialog.getOpenFileName(self.tabWidget,'Open A Report:',path, filter = 'Files (*.txt )')
+            return QtWidgets.QFileDialog.getOpenFileName(self.tabWidget,'Open A Report:',path, filter = 'Files (*.txt )')
 #---------------------------------------------------------------------------------------------------------------------
     def clear(self):
             loadInfo()
@@ -478,42 +470,48 @@ class Ui_MainWindow(object):
             self.email.clear()
             self.report.clear()
             self.current_position.clear()
+            self.employement_type.clear()
 #---------------------------------------------------------------------------------------------------------------------
-    def saveInformation(self):
-                
+    def clear2(self):
+        #    loadInfo()
+            self.kim_2.clear()
+            self.fname_2.clear()
+            self.lname_2.clear()
+            self.employement_type_2.clear()
+            self.birthday_2.clear()
+            self.personal_number_2.clear()
+            self.employee_group_2.clear()
+            self.hr_level_2.clear()
+            self.email_2.clear()
+            self.report_2.clear()
+            self.current_position_2.clear()
+#---------------------------------------------------------------------------------------------------------------------
+
+    def saveInformation(self):       
                 if len(self.kim.text()) == 0 or len(self.fname.text())== 0 or len(self.current_position.text()) == 0 or len(self.report.text())== 0 or len(self.employee_group.text())== 0 or len(self.personal_number.text()) == 0:
                     return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Please Provide Responses For All The Fields')
                 if self.gender.currentText() =='Male':
                         gender =1
                 else:
                         gender = 0
-
+                if  not check_kim(len(self.kim.text())):
+                            return QtWidgets.QMessageBox.about(self.tabWidget,'Error','KIM should be 15 characters long')
                 data = {
-                'kim': self.kim.text(),
+                'kim': fix_input('kim',self.kim.text()),
                 'gender':gender,
-                'fname':self.fname.text(),
-                'lname':self.lname.text(),
+                'fname':fix_input('fn',self.fname.text()),
+                'lname':fix_input('ln',self.lname.text()),
                 'bdate':dateCheck1(self.birthday.text()),
                 'date_of_entry':dateCheck1(self.date_of_entry.text()),
-                'personal_number':self.personal_number.text(),
-                'employee_group':self.employee_group.text(),
-                'etype':self.employement_type.text(),
-                'hr_level':self.hr_level.text(),
-                'temail':self.email.text(),
-                'report':self.report.text(),
-                'position':self.current_position.text()
+                'personal_number':fix_input('pn',self.personal_number.text()),
+                'employee_group':fix_input('eg',self.employee_group.text()),
+                'etype':fix_input('et',self.employement_type.text()),
+                'hr_level':fix_input('hr',self.hr_level.text()),
+                'temail': fix_input('email',self.email.text()),
+                'report':fix_input('rk',self.report.text()),
+                'position':fix_input('pos',self.current_position.text())
                 }
-                self.kim.clear()
-                self.fname.clear()
-                self.lname.clear()
-                self.birthday.clear()
-                self.personal_number.clear()
-                self.employee_group.clear()
-                self.hr_level.clear()
-                self.email.clear()
-                self.report.clear()
-                self.current_position.clear()
-
+                print(data)
                 if saveInfo(data) ==1:
                         return QtWidgets.QMessageBox.about(self.tabWidget,'Success','Employee Information Saved Successfully')
                 else:
@@ -522,39 +520,23 @@ class Ui_MainWindow(object):
     def reports(self):
             if len(self.title.text()) == 0 or len(self.spacing.text())== 0 :
                 return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Please Provide Responses For All The Fields')
-
             date1 = str(self.to.text()).split('/')
             to2 = dateCheck('to',date1)
-            print(to2)
             date2 = str(self.ffrom.text()).split('/') 
             from2 = dateCheck('fromm',date2)
-            print(from2)
             data= {
                 'title':self.title.text(),   
                 'from':from2,
                 'to':to2,
                 'spacing':int(0), 
             }
-			self.kim.clear()
-			self.fname.clear()
-			self.lname.clear()
-			self.birthday.clear()
-			self.personal_number.clear()
-			self.employee_group.clear()
-			self.hr_level.clear()
-			self.email.clear()
-			self.report.clear()
-			self.current_position.clear()
-
-            print(data)
             try:    
-                    if gen(generate_report(data.get('from'),data.get('to')),data.get('title'),data.get('spacing')) >0:
+                    if gen(generate_report(data.get('from'),data.get('to')),data.get('title')) >0:
                         return QtWidgets.QMessageBox.about(self.tabWidget,'Success','Report Generated Saved Successfully')
                     else:
                         return QtWidgets.QMessageBox.about(self.tabWidget,'Error','No Data Was Saved During This Period')                            
             except Exception as e:
                     return QtWidgets.QMessageBox.about(self.tabWidget,'Error',str(e))
-                    
 #---------------------------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     import sys

@@ -63,6 +63,7 @@ class Ui_MainWindow(object):
         self.ffrom = QtWidgets.QDateEdit(self.Reports)
         self.ffrom.setGeometry(QtCore.QRect(210, 220, 521, 41))
         self.ffrom.setSpecialValueText("")
+        self.fromm.setDisplayFormat("yyyy-MM-dd")
         self.ffrom.setObjectName("ffrom")
         self.label = QtWidgets.QLabel(self.Reports)
         self.label.setGeometry(QtCore.QRect(120, 220, 71, 41))
@@ -78,6 +79,7 @@ class Ui_MainWindow(object):
         self.to.setGeometry(QtCore.QRect(210, 330, 521, 41))
         self.to.setSpecialValueText("")
         self.to.setObjectName("to")
+        self.to.setDisplayFormat("yyyy-MM-dd")
         self.saveButton = QtWidgets.QPushButton(self.Reports)
         self.saveButton.setGeometry(QtCore.QRect(80, 550, 271, 51))
         self.saveButton.setStyleSheet("background-color: rgb(0, 71, 0);\n"
@@ -520,14 +522,10 @@ class Ui_MainWindow(object):
     def reports(self):
             if len(self.title.text()) == 0 or len(self.spacing.text())== 0 :
                 return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Please Provide Responses For All The Fields')
-            date1 = str(self.to.text()).split('/')
-            to2 = dateCheck('to',date1)
-            date2 = str(self.ffrom.text()).split('/') 
-            from2 = dateCheck('fromm',date2)
             data= {
                 'title':self.title.text(),   
-                'from':from2,
-                'to':to2,
+                'from':self.fromm.text(),
+                'to':self.to.text(),
                 'spacing':int(0), 
             }
             try:    

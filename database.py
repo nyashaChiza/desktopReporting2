@@ -45,6 +45,7 @@ def updateInfo(data):
         sql =  ''' UPDATE A_I
                     SET first_name = ?,
                     last_name = ?,
+                    gender = ?,
                     birth_date = ?
                     WHERE kim = ?'''
         con.execute(sql, (data.get('fname'),data.get('lname'),data.get('bdate'),data.get('kim')))
@@ -60,9 +61,11 @@ def updateInfo(data):
         con.execute(sql, [data.get('pnumber'),data.get('kim')])
 
         sql =  ''' UPDATE AM_AW
-        SET employee_group = ? 
-                    WHERE kim = ?'''
-        con.execute(sql, [data.get('employee_group'),data.get('kim')])
+        SET employee_group = ?,
+                hr_executive_level = ?,
+                employment_type = ?,
+                WHERE kim = ?'''
+        con.execute(sql, [data.get('employee_group'),data.get('hr_level'),data.get('etype'),data.get('kim')])
 
         sql =  ''' UPDATE AM_AW
         SET hr_executive_level = ?
@@ -254,7 +257,7 @@ def saveInfo(data):
             con.execute('''INSERT INTO A_I (kim,sin,gender,first_name,last_name,last_name_prefix,academic_title,filler1,birth_date,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?) ''',(data.get("kim"),row[1].value,data.get('gender'),data.get('fname'),data.get('lname'),row[5].value,row[6].value,row[7].value, data.get('bdate'),date.today() ))
             con.execute('''INSERT INTO J_S (kim,country_code,postal_code,city,c_o,filler2,filler3,filler4,country_code_mail_address,postal_code_mail_address,city_mail_address,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ''',(data.get("kim"),row[9].value,row[10].value,row[11].value,row[12].value,row[13].value,row[14].value,row[15].value,row[16].value,row[17].value,row[18].value,date.today() ))
             con.execute('''INSERT INTO T_AC (kim,date_of_entry_into_group,date_of_leaving_group,reason_for_leaving_the_group,bank_code,bank_account_number,swift_bic,owner_of_bank_account,employee_with_potential,indicator_for_executive,indicator_for_security_advisor,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ''',(data.get("kim"),data.get('date_of_entry'),row[20].value,row[21].value,row[22].value,row[23].value,row[24].value,row[25].value,row[26].value,row[27].value,row[28].value,date.today() ))
-            con.execute('''INSERT INTO AD_AN (kim,indicator_eligibility_stock_purchase_program,company_code,personal_number,plant_identifier_for_personal_number,filler5,filler6,transfer_date,filler7,filler8,local_cost_center,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ''',(data.get("kim"),row[29].value,row[30].value,data.get('personal_number'),row[32].value,row[33].value,row[34].value,row[35].value,row[36].value,row[37].value,row[38].value,date.today() ))
+            con.execute('''INSERT INTO AD_AN (kim,indicator_eligibility_stock_purchase_program,company_code,personal_number,plant_identifier_for_personal_number,filler5,filler6,transfer_date,filler7,filler8,local_cost_center,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ''',(data.get("kim"),row[29].value,row[30].value,row[31].value,data.get('personal_number'),row[33].value,row[34].value,row[35].value,row[36].value,row[37].value,row[38].value,date.today() ))
             con.execute('''INSERT INTO AM_AW (kim,employee_group,filler9,department_abbreviation,hr_executive_level,employment_type,organizational_code,physical_work_location_code,internal_mail_code,level_of_business_allocation1,level_of_business_allocation2,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ''',(data.get("kim"),data.get('employee_group'),row[40].value,row[41].value,data.get('hr_level'),data.get('etype'),row[44].value,row[45].value,row[46].value,row[47].value,row[48].value,date.today() ))
             
             con.execute('''INSERT INTO AX_BG (kim,mailing_language_of_employee,building,room_number,location_code,country_of_birth,city_of_birth,citizenship,filler10,filler11,street_and_house_number_of_home_address,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ''',(data.get("kim"),row[49].value,row[50].value,row[51].value,row[52].value,row[53].value,row[54].value,row[55].value,row[56].value,row[57].value,row[58].value,date.today() ))
@@ -290,6 +293,30 @@ def find_employee(kim):
         return 1
     else:
         return 0
+#---------------------------------------------------------------------------------------------------------------------
+def collect_data(kim):
+    data = []
+    conn = sqlite3.connect('database.sqlite')
+    con = conn.cursor()
+    con.execute("SELECT gender,first_name,last_name,birth_date  FROM A_I Where kim = ?",[kim])
+    data.extend(con.fetchall())
+    print(con.fetchall())
+    con.execute("SELECT date_of_entry_into_group FROM T_AC Where kim= ?",[kim])
+    data.extend(con.fetchall())
+    con.execute("SELECT personal_number FROM AD_AN Where kim= ?",[kim])
+    data.extend(con.fetchall())
+    con.execute("SELECT employee_group,hr_executive_level,employment_type FROM AM_AW Where kim= ?",[kim])
+    data.extend(con.fetchall())
+    con.execute("SELECT smtp_email_address FROM BH_BQ Where kim =?",[kim])
+    data.extend(con.fetchall())
+    con.execute("SELECT reports_to_kim FROM BR_CA Where kim =?",[kim])
+    data.extend(con.fetchall())
+    con.execute("SELECT current_position_title FROM CX_DG Where kim= ?",[kim])
+    data.extend(con.fetchall())
+    if len(data)> 1:
+        return None
+    else:
+        return data
 #---------------------------------------------------------------------------------------------------------------------
 def generate_report(start,stop):
     data = []
@@ -481,20 +508,12 @@ def fix_input(option, word):
         return word
 
     elif option == 'eg':
-        return word[:1]
+        return word
 
     elif option == 'hr':
-        mx = 3
-        wlen = len(word)
-        for x in range(0 ,(mx-wlen)):
-            word = word+' '
         return word
 
     elif option == 'et':
-        mx = 3
-        wlen = len(word)
-        for x in range(0 ,(mx-wlen)):
-            word = word+' '
         return word
 
     elif option == 'email':
@@ -504,7 +523,12 @@ def fix_input(option, word):
             word = word+' '
         return word
 #------------------------------------------------------------------------------------------------------
-
-
+def fix_value(word):
+    mx_len = len(word)
+    padding = 9- mx_len
+    for x in range(padding):
+        word = '0'+ word
+    return word
+#------------------------------------------------------------------------------------------------------
 
 

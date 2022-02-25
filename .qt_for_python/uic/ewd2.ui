@@ -27,7 +27,7 @@
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>-325</y>
+         <y>-53</y>
          <width>1065</width>
          <height>1172</height>
         </rect>
@@ -46,6 +46,9 @@
 background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.149254 rgba(7, 82, 42, 145), stop:0.427861 rgba(112, 196, 164, 97), stop:0.736318 rgba(0, 0, 0, 60));</string>
           </property>
           <widget class="QTabWidget" name="tabWidget">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="geometry">
             <rect>
              <x>70</x>
@@ -58,14 +61,14 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0.149
             <enum>Qt::NoContextMenu</enum>
            </property>
            <property name="styleSheet">
-            <string notr="true">font: 11pt &quot;Arial Rounded MT Bold&quot;;
+            <string notr="true">font: 12pt &quot;Arial Rounded MT Bold&quot;;
 background-color: rgb(255, 255, 255);</string>
            </property>
            <property name="tabPosition">
             <enum>QTabWidget::North</enum>
            </property>
            <property name="currentIndex">
-            <number>2</number>
+            <number>0</number>
            </property>
            <property name="elideMode">
             <enum>Qt::ElideMiddle</enum>
@@ -1161,6 +1164,15 @@ border-radius:8px;</string>
              </property>
              <property name="text">
               <string>Find Employee</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="autoRepeat">
+              <bool>true</bool>
+             </property>
+             <property name="autoDefault">
+              <bool>true</bool>
              </property>
              <property name="flat">
               <bool>true</bool>

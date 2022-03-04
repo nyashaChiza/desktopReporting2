@@ -39,16 +39,16 @@ def _createTables(con):
     con.close()
 #-----------------------------------------------------------------------------------------------------------------------------------
 def updateInfo(data):
-    conn = sqlite3.connect('database.sqlite')
-    con = conn.cursor()  
-    try:
+        conn = sqlite3.connect('database.sqlite')
+        con = conn.cursor()  
+    
         sql =  ''' UPDATE A_I
                     SET first_name = ?,
                     last_name = ?,
                     gender = ?,
                     birth_date = ?
                     WHERE kim = ?'''
-        con.execute(sql, (data.get('fname'),data.get('lname'),data.get('bdate'),data.get('kim')))
+        con.execute(sql, (data.get('fname'),data.get('lname'),data.get('gender'),data.get('bdate'),data.get('kim')))
 
         sql =  '''UPDATE T_AC
         SET date_of_entry_into_group = ?
@@ -56,14 +56,14 @@ def updateInfo(data):
         con.execute(sql, [data.get('date_of_entry'),data.get('kim')])
 
         sql =  ''' UPDATE AD_AN
-        SET personal_number = ? 
+        SET plant_identifier_for_personal_number = ? 
                     WHERE kim = ?'''
         con.execute(sql, [data.get('pnumber'),data.get('kim')])
 
         sql =  ''' UPDATE AM_AW
         SET employee_group = ?,
                 hr_executive_level = ?,
-                employment_type = ?,
+                employment_type = ?
                 WHERE kim = ?'''
         con.execute(sql, [data.get('employee_group'),data.get('hr_level'),data.get('etype'),data.get('kim')])
 
@@ -72,10 +72,12 @@ def updateInfo(data):
                     WHERE kim = ?'''
         con.execute(sql, [data.get('hr_level'),data.get('kim')])
 
+
         sql =  ''' UPDATE BH_BQ
-        SET smtp_email_address = ?
+        SET smtp_email_address = ?,
+                date_contract_end=?
                     WHERE kim = ?'''
-        con.execute(sql, [data.get('email'),data.get('kim')])
+        con.execute(sql, [data.get('email'),data.get('date_of_contract_end'),data.get('kim')])
 
         sql =  ''' UPDATE BR_CA
         SET reports_to_kim = ?
@@ -87,7 +89,7 @@ def updateInfo(data):
                     WHERE kim = ?'''
         con.execute(sql, [data.get('current_position'),data.get('kim')])
         conn.commit()
-#date update
+#-----------------------------------date update---------------------------------------
         sql =  ''' UPDATE A_I
         SET date_entry = ?
                     WHERE kim = ?'''
@@ -210,14 +212,14 @@ def updateInfo(data):
         con.execute(sql, [date.today(),data.get('kim')])
         conn.commit()
         return 1
-    except Exception as e:
-        print(e)
-        return 0
+ #   except Exception as e:
+  #      print(e)
+  #      return 0
 #-----------------------------------------------------------------------------------------------------------------------------------
 def loadInfo():
     conn = sqlite3.connect('database.sqlite')
     con = conn.cursor()
-    file = 'test.xlsx'
+    file = 'assets/test.xlsx'
     wb_obj = load_workbook(filename=file)
     ws = wb_obj.active
     for row in ws.iter_rows(min_row=2, min_col=1, max_row=ws.max_row, max_col=ws.max_column):
@@ -250,7 +252,7 @@ def loadInfo():
 def saveInfo(data):
     conn = sqlite3.connect('database.sqlite')
     con = conn.cursor()  
-    file = 'test.xlsx'
+    file = 'assets/test.xlsx'
     wb_obj = load_workbook(filename=file)
     ws = wb_obj.active
     for row in ws.iter_rows(min_row=10, min_col=1, max_row=11, max_col=ws.max_column):
@@ -259,10 +261,9 @@ def saveInfo(data):
             con.execute('''INSERT INTO T_AC (kim,date_of_entry_into_group,date_of_leaving_group,reason_for_leaving_the_group,bank_code,bank_account_number,swift_bic,owner_of_bank_account,employee_with_potential,indicator_for_executive,indicator_for_security_advisor,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ''',(data.get("kim"),data.get('date_of_entry'),row[20].value,row[21].value,row[22].value,row[23].value,row[24].value,row[25].value,row[26].value,row[27].value,row[28].value,date.today() ))
             con.execute('''INSERT INTO AD_AN (kim,indicator_eligibility_stock_purchase_program,company_code,personal_number,plant_identifier_for_personal_number,filler5,filler6,transfer_date,filler7,filler8,local_cost_center,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ''',(data.get("kim"),row[29].value,row[30].value,row[31].value,data.get('personal_number'),row[33].value,row[34].value,row[35].value,row[36].value,row[37].value,row[38].value,date.today() ))
             con.execute('''INSERT INTO AM_AW (kim,employee_group,filler9,department_abbreviation,hr_executive_level,employment_type,organizational_code,physical_work_location_code,internal_mail_code,level_of_business_allocation1,level_of_business_allocation2,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ''',(data.get("kim"),data.get('employee_group'),row[40].value,row[41].value,data.get('hr_level'),data.get('etype'),row[44].value,row[45].value,row[46].value,row[47].value,row[48].value,date.today() ))
-            
-            con.execute('''INSERT INTO AX_BG (kim,mailing_language_of_employee,building,room_number,location_code,country_of_birth,city_of_birth,citizenship,filler10,filler11,street_and_house_number_of_home_address,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ''',(data.get("kim"),row[49].value,row[50].value,row[51].value,row[52].value,row[53].value,row[54].value,row[55].value,row[56].value,row[57].value,row[58].value,date.today() ))
-            con.execute('''INSERT INTO BH_BQ (kim,street_and_house_number_for_preferred_mailing_address,filler12,job_code,plant1,plant2,organizational_code2,smtp_email_address,position_entry_date,date_contract_end,hr_department,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ''',(data.get("kim"),row[59].value,row[60].value,row[61].value,row[62].value,row[64].value,row[63].value,data.get('temail'),row[66].value,row[67].value,row[68].value,date.today() ))
-            con.execute('''INSERT INTO BR_CA (kim,hr_representative,fax_number_hr_representative,management_level,work_phone_number_of_hr_representative,preferred_first_name,middle_initial,home_host_indicator,fulltime_parttime_equivalency,reports_to_kim,date_of_entry_into_company,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ''',(data.get("kim"),row[69].value,row[70].value,row[71].value,row[72].value,row[73].value,row[74].value,row[75].value,row[76].value,data.get('report'),row[78].value,date.today() ))
+            con.execute('''INSERT INTO AX_BG (kim,mailing_language_of_employee,building,room_number,location_code,country_of_birth,city_of_birth,citizenship,filler10,filler11,street_and_house_number_of_home_address,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ''',(data.get("kim"),row[49].value,row[50].value,row[51].value,row[52].value,row[53].value,row[54].value,data.get('nationality'),row[56].value,row[57].value,row[58].value,date.today() ))
+            con.execute('''INSERT INTO BH_BQ (kim,street_and_house_number_for_preferred_mailing_address,filler12,job_code,plant1,plant2,organizational_code2,smtp_email_address,position_entry_date,date_contract_end,hr_department,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ''',(data.get("kim"),row[59].value,row[60].value,row[61].value,row[62].value,row[64].value,row[63].value,data.get('temail'),data.get('date_of_entry'),data.get('date_of_contract_end'),row[68].value,date.today() ))
+            con.execute('''INSERT INTO BR_CA (kim,hr_representative,fax_number_hr_representative,management_level,work_phone_number_of_hr_representative,preferred_first_name,middle_initial,home_host_indicator,fulltime_parttime_equivalency,reports_to_kim,date_of_entry_into_company,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ''',(data.get("kim"),row[69].value,row[70].value,row[71].value,row[72].value,row[73].value,row[74].value,row[75].value,row[76].value,data.get('report'),data.get('date_of_entry'),date.today() ))
             con.execute('''INSERT INTO CB_CW (kim,filler12,filler13,filler14,filler15,filler16,filler17,filler18,filler19,filler20,filler21,filler22,filler23,filler24,filler25,filler26,filler27,filler28,filler29,filler30,filler31,filler32,filler33,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ''',(data.get("kim"),row[79].value,row[80].value,row[81].value,row[82].value,row[83].value,row[84].value,row[85].value,row[86].value,row[87].value,row[88].value,row[89].value,row[90].value,row[91].value,row[92].value,row[93].value,row[94].value,row[95].value,row[96].value,row[97].value,row[98].value,row[99].value,row[100].value,date.today() ))
             con.execute('''INSERT INTO CX_DG (kim,current_position_title,payment_type,plant_section,filler35,indicator_for_disabled_person,social_security_number,state,state_for_preferred_mailing_address,phone_country_code,date_entry)VALUES(?,?,?,?,?,?,?,?,?,?,?) ''',(data.get("kim"),data.get('position'),row[98].value,row[102].value,row[103].value,row[104].value,row[105].value,row[106].value,row[107].value,row[108].value,date.today() ))
             
@@ -283,12 +284,19 @@ def saveInfo(data):
 def check_kim(size):
     return size == 15
 #---------------------------------------------------------------------------------------------------------------------
+def gen2(title):
+    file = 'assets/report2.xlsx'
+    wb_obj = load_workbook(filename=file)
+    ws = wb_obj.active
+    ws["d7"] = "one"
+    wb_obj.save(filename="Reports2/"+title+".xlsx")
+    return 1
+#---------------------------------------------------------------------------------------------------------------------
 def find_employee(kim):
     conn = sqlite3.connect('database.sqlite')
     con = conn.cursor()
     con.execute("SELECT * FROM A_I WHERE kim=?", (str(kim),))
     rows = con.fetchall()
-
     if len(rows) > 0:
         return 1
     else:
@@ -296,27 +304,174 @@ def find_employee(kim):
 #---------------------------------------------------------------------------------------------------------------------
 def collect_data(kim):
     data = []
+   # kim='123456789012345'
     conn = sqlite3.connect('database.sqlite')
     con = conn.cursor()
     con.execute("SELECT gender,first_name,last_name,birth_date  FROM A_I Where kim = ?",[kim])
-    data.extend(con.fetchall())
-    print(con.fetchall())
+    data.extend(list(con.fetchall()))
     con.execute("SELECT date_of_entry_into_group FROM T_AC Where kim= ?",[kim])
-    data.extend(con.fetchall())
-    con.execute("SELECT personal_number FROM AD_AN Where kim= ?",[kim])
-    data.extend(con.fetchall())
+    data.extend(list(con.fetchall()))
+    con.execute("SELECT plant_identifier_for_personal_number FROM AD_AN Where kim= ?",[kim])
+    data.extend(list(con.fetchall()))
     con.execute("SELECT employee_group,hr_executive_level,employment_type FROM AM_AW Where kim= ?",[kim])
-    data.extend(con.fetchall())
-    con.execute("SELECT smtp_email_address FROM BH_BQ Where kim =?",[kim])
-    data.extend(con.fetchall())
+    data.extend(list(con.fetchall()))
+    con.execute("SELECT smtp_email_address,date_contract_end FROM BH_BQ Where kim =?",[kim])
+    data.extend(list(con.fetchall()))
     con.execute("SELECT reports_to_kim FROM BR_CA Where kim =?",[kim])
-    data.extend(con.fetchall())
+    data.extend(list(con.fetchall()))
     con.execute("SELECT current_position_title FROM CX_DG Where kim= ?",[kim])
-    data.extend(con.fetchall())
-    if len(data)> 1:
+    data.extend(list(con.fetchall()))
+    out = None
+    out = {'gender':data[0][0],'name':str(data[0][1]).strip(),'surname':str(data[0][2]).strip(),'birthday':fix_d(data[0][3]),'date':data[1][0],'pnum':data[2][0],'eg':data[3][0],'hr':data[3][1],'et':data[3][2],'email':str(data[4][0]).strip(),'contract_end':str(data[4][1]).strip(),'report':data[5][0],'position':str(data[6][0]).strip()}
+    return out
+
+#---------------------------------------------------------------------------------------------------------------------
+def terminate(data):
+        conn = sqlite3.connect('database.sqlite')
+        con = conn.cursor()
+        sql =  ''' UPDATE T_AC
+        SET date_of_leaving_group = ?,
+                reason_for_leaving_the_group = ?,
+                date_entry = ?
+                WHERE kim = ?'''
+        print(data)
+        con.execute(sql, [data.get('date'),data.get('reason'),date.today(),data.get('kim')])
+#-----------------------------------date update---------------------------------------
+        sql =  ''' UPDATE A_I
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE J_S
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE T_AC
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE AD_AN
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE AM_AW
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE AX_BG
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE BH_BQ
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE BR_CA
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+
+        sql =  ''' UPDATE CB_CW
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE CX_DG
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE EB_EK
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE DH_DQ
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE DR_EA
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE EL_EY
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE EZ_FI
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+
+        sql =  ''' UPDATE FJ_FS
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE FT_GC
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE GD_GM
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE GN_GW
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+
+        sql =  ''' UPDATE GX_HK
+        SET date_entry = ?
+                    WHERE kim = ?'''
+        con.execute(sql, [date.today(),data.get('kim')])
+        conn.commit()
+        return 1
+
+#---------------------------------------------------------------------------------------------------------------------
+def collect_data2(kim):
+    data = []
+    conn = sqlite3.connect('database.sqlite')
+    con = conn.cursor()
+    try:
+        con.execute("SELECT first_name,last_name  FROM A_I Where kim = ?",[kim])
+        data.extend(list(con.fetchall()))
+        return {'name':str(data[0][0]).strip(),'surname':str(data[0][1]).strip()}
+    except Exception as e:
+        print(e)
         return None
-    else:
-        return data
 #---------------------------------------------------------------------------------------------------------------------
 def generate_report(start,stop):
     data = []
@@ -407,13 +562,16 @@ def gen(data, title):
 	count =0
 	if data[1] > 0:
 		with open('Reports/'+title+'.txt','w', encoding = 'utf-8') as f:
+			f.write('HEADERFIX      MDAT589   02112021021120211              WALTER MUBAI                  WALTER.MUBAI@ATLANTISFOUNDRIES.COM                0027215737382')
 			for i in data[0]:
 				f.write('\n')
 				count =0
 				for j in i:
 					count = count + 1
 					if count == 66 and j[0] != ' ':
-						f.writelines((process1(j,12)))
+						f.writelines(process1(j,12))
+					elif count == 9:
+						f.writelines(process(fix_d(j),12))
 					else:
 						f.writelines((process(str(j),12).replace('.','')).replace('-',''))
 		
@@ -456,27 +614,8 @@ def dateCheck(arg,value):
                 return value[2]+result[1]+value[1]+result[0]+value[0]
 #---------------------------------------------------------------------------------------------------------------------
 def dateCheck1(value):
-            result = []
-            maps=[]
-            value = str(value).split('/')
-
-            if len(value[0])==1:
-                maps.append(1)
-            else:
-                maps.append(0)
-            if len(value[1])== 1:
-                maps.append(1)
-            else:
-                maps.append(0)
-            if maps[0] ==1:
-                       result.append('0')
-            else:
-                        result.append('')
-            if maps[1] ==1:
-                       result.append('0')
-            else:
-                        result.append('')
-            return result[0]+value[0]+result[1]+value[1]+value[2]
+        value = str(value).split('-')
+        return value[2]+value[1]+value[0]
 #---------------------------------------------------------------------------------------------------------------------
 def fix_input(option, word):
     if option == 'fn' or option == 'ln':
@@ -510,6 +649,9 @@ def fix_input(option, word):
     elif option == 'eg':
         return word
 
+    elif option == 'nat':
+        return word
+
     elif option == 'hr':
         return word
 
@@ -529,6 +671,93 @@ def fix_value(word):
     for x in range(padding):
         word = '0'+ word
     return word
+#------------------------------------------------------------------------------------------------------
+def fix_d(word):
+    if len(str(word)) != 8:
+        return '0'+ str(word)
+    return str(word)
+#------------------------------------------------------------------------------------------------------
+def comboFix(field, option):
+    if field == 'gender':
+        if option == 'Male':
+            return 1
+        else:
+            return 2
+    elif field == 'area':
+        if option == 'Support':
+            return 1
+        elif option == 'Direct':
+            return 3
+        elif option == 'Indirect':
+            return 4
+    elif field == 'job':
+        return option
+    elif field == 'nationality':
+        return option
+    elif field == 'contract':
+        if option == 'Permanent':
+            return 100
+        elif  option =='LTD Duration':
+            return 210
+        elif option == 'Apprentice Ext':
+            return 311
+        elif option == 'Students':
+            return 330
+    elif field == 'reason':
+        if option == 'Death':
+            return 21
+        elif option == 'Retirement':
+            return 22
+        elif option =='Mutual Agreement':
+            return 24
+        elif option=='Dismissal/Termination':
+            return 25
+        elif option == 'Selling of Company':
+            return 26
+        elif option == 'Self-Motivated Termination of Contract':
+            return 27
+        elif option == 'Company Driven Termination':
+            return 28
+        elif option == 'SA with Reemployment Promise (Layoffs)':
+            return 29
+#------------------------------------------------------------------------------------------------------
+def fixCombo(option):
+    option = int(option)
+    if option== 1:
+        return 'Male'
+    elif option==2:
+        return 'Female'
+    elif option==29:
+        return 'SA with Reemployment Promise (Layoffs)'
+    elif option==28:
+        return 'Company Driven Termination'
+    elif option==27:
+        return 'Self-Motivated Termination of Contract'
+    elif option==26:
+        return 'Selling of Company'
+    elif option==25:
+        return 'Dismissal/Termination'
+    elif option==24:
+        return 'Mutual Agreement'
+    elif option==22:
+        return 'Retirement'
+    elif option==21:
+        return 'Death'
+    elif option==330:
+        return 'Students'
+    elif option==311:
+        return 'Apprentice Ext'
+    elif option==210:
+        return 'LTD Duration'
+    elif option==100:
+        return 'Permanent'
+    elif option==4:
+        return 'Indirect'
+    elif option==3:
+        return 'Direct'
+    elif option==1:
+        return 'Support'
+    
 #------------------------------------------------------------------------------------------------------
 
 

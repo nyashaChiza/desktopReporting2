@@ -1,3 +1,4 @@
+
 import cx_Freeze
 import sys
 
@@ -10,7 +11,7 @@ executables = [cx_Freeze.Executable("PetalmServices.py", base=base,icon="icon.ic
 
 cx_Freeze.setup(
     name = "Petalm Africa Services",
-    options = {"build_exe": {"packages":["PyQt5","openpyxl","os"], "include_files":["icon.ico","database.py","database.sqlite","test.xlsx"]}},
+    options = {"build_exe": {"packages":["PyQt5","openpyxl","os"], "include_files":["icon.ico","database.py","database.sqlite","assets/test.xlsx","assets/report2.xlsx"]}},
     version = "1.0",
     author = "Nyasha Chizampeni",
     description = "Petalm Africa Services EWD Report Generator",

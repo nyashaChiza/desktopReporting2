@@ -288,7 +288,27 @@ def gen2(title):
     file = 'assets/report2.xlsx'
     wb_obj = load_workbook(filename=file)
     ws = wb_obj.active
-    ws["d7"] = "one"
+    ws["d7"] = 12
+    ws["d9"] = 35
+    ws["d10"] = 46
+    ws["d11"] = 11
+    ws["d12"] = 24
+    ws["d13"] = 86
+    ws["d14"] = 86
+    ws["d15"] = 54
+    ws["d16"] = 53
+    ws["d17"] = 27
+    ws["e7"] = 12
+    ws["e9"] = 35
+    ws["e10"] = 46
+    ws["e11"] = 11
+    ws["e12"] = 24
+    ws["e13"] = 86
+    ws["e14"] = 86
+    ws["e15"] = 54
+    ws["e16"] = 53
+    ws["e17"] = 27
+
     wb_obj.save(filename="Reports2/"+title+".xlsx")
     return 1
 #---------------------------------------------------------------------------------------------------------------------

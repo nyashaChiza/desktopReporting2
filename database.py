@@ -288,26 +288,27 @@ def gen2(title):
     file = 'assets/report2.xlsx'
     wb_obj = load_workbook(filename=file)
     ws = wb_obj.active
-    ws["d7"] = 12
-    ws["d9"] = 35
-    ws["d10"] = 46
-    ws["d11"] = 11
-    ws["d12"] = 24
-    ws["d13"] = 86
-    ws["d14"] = 86
-    ws["d15"] = 54
-    ws["d16"] = 53
-    ws["d17"] = 27
-    ws["e7"] = 12
-    ws["e9"] = 35
-    ws["e10"] = 46
-    ws["e11"] = 11
-    ws["e12"] = 24
-    ws["e13"] = 86
-    ws["e14"] = 86
-    ws["e15"] = 54
-    ws["e16"] = 53
-    ws["e17"] = 27
+    data = getData()
+    ws["d7"] = data[0].get('boys')
+    ws["d9"] = data[1].get('boys')
+    ws["d10"] = data[2].get('boys')
+    ws["d11"] = data[3].get('boys')
+    ws["d12"] = data[4].get('boys')
+    ws["d13"] = data[5].get('boys')
+    ws["d14"] = data[6].get('boys')
+    ws["d15"] = data[7].get('boys')
+    ws["d16"] = 0
+    ws["d17"] = 0
+    ws["e7"] = data[0].get('girls')
+    ws["e9"] = data[1].get('girls')
+    ws["e10"] = data[2].get('girls')
+    ws["e11"] = data[3].get('girls')
+    ws["e12"] = data[4].get('girls')
+    ws["e13"] = data[5].get('girls')
+    ws["e14"] = data[6].get('girls')
+    ws["e15"] = data[7].get('girls')
+    ws["e16"] = 0
+    ws["e17"] = 0
 
     wb_obj.save(filename="Reports2/"+title+".xlsx")
     return 1
@@ -715,14 +716,68 @@ def comboFix(field, option):
     elif field == 'nationality':
         return option
     elif field == 'contract':
-        if option == 'Permanent':
+        if option == 'Permanent Employees':
             return 100
-        elif  option =='LTD Duration':
+        elif  option =='Host Based':
+            return 205
+        elif option == 'Senior Expert':
+            return 207
+        elif option == 'Local&Move Transforming Europa':
+            return 209
+        elif  option =='Temporary Employees (n/a for impatriates)':
             return 210
-        elif option == 'Apprentice Ext':
-            return 311
-        elif option == 'Students':
-            return 330
+        elif option == 'Employee on Holiday Job':
+            return 230
+        elif option == 'Employees in educational program - e.g. Co-op':
+            return 312
+        elif  option =='Int. Management Associate Program':
+            return 320
+        elif option == 'Brückenpraktikant (Germany only)':
+            return 335
+        elif option == 'PhD Candidates':
+            return 340
+        elif  option =='Working Students':
+            return 350
+        elif option == 'Temporarily Separated (others)':
+            return 400
+        elif option == 'released':
+            return 455
+        elif option == 'Military Service/ Civilian Service':
+            return 460
+        elif  option =='Long-Term Absence':
+            return 461
+        elif option == 'Expats':
+            return 465
+        elif option == 'Parental Leave':
+            return 466
+        elif  option =='Employee who is long term ill':
+            return 474
+        elif option == 'Nursing Leave':
+            return 477
+        elif option == 'Retiree':
+            return 510
+        elif option == 'Retiree Executive':
+            return 520
+        elif option == 'Early Retirees':
+            return 530
+        elif option == 'Employee in Part-Time Retirement (passive)':
+            return 540
+        elif  option =='Surviving Spouses':
+            return 610
+        elif option == 'Surviving Children':
+            return 620
+        elif option == 'Überlassungsmodell Direct Sales':
+            return 900
+        elif  option =='Joint Venture-Employees':
+            return 910
+        elif option == 'Re-hire Agreement':
+            return 920
+        elif option == 'User Cooperations':
+            return 950
+        elif  option =='Agency Worker':
+            return 998
+        elif option == 'Non-Employees':
+            return 999
     elif field == 'reason':
         if option == 'Death':
             return 21
@@ -764,13 +819,72 @@ def fixCombo(option):
     elif option==21:
         return 'Death'
     elif option==330:
-        return 'Students'
+        return 'Employees in formal education'
     elif option==311:
-        return 'Apprentice Ext'
+        return 'Employees in educational program - Apprenticeship'
     elif option==210:
-        return 'LTD Duration'
+        return 'Temporary Employees (n/a for impatriates)'
     elif option==100:
-        return 'Permanent'
+        return 'Permanent Employees'
+#--------------------------------------
+    elif option==205:
+        return 'Host Based'
+    elif option==207:
+        return 'Senior Expert'
+    elif option==209:
+        return 'Local&Move Transforming Europa'
+    elif option==230:
+        return 'Employee on Holiday Job'
+#--------------------------------------
+#--------------------------------------
+    elif option==312:
+        return 'Employees in educational program - e.g. Co-op'
+    elif option==335:
+        return 'Brückenpraktikant (Germany only)'
+    elif option==320:
+        return 'Int. Management Associate Program'
+    elif option==340:
+        return 'PhD Candidates'
+#--------------------------------------
+#--------------------------------------
+    elif option==350:
+        return 'Working Students'
+    elif option==400:
+        return 'Temporarily Separated (others)'
+    elif option==455:
+        return 'released'
+    elif option==460:
+        return 'Military Service/ Civilian Service'
+#--------------------------------------
+    elif option==477:
+        return 'Nursing Leave'
+    elif option==510:
+        return 'Retiree'
+    elif option == 520:
+        return 'Retiree Executive'
+    elif option==530:
+        return 'Early Retirees'
+#--------------------------------------
+    elif option==540:
+        return 'Employee in Part-Time Retirement (passive)'
+    elif option==610:
+        return 'Surviving Spouses'
+    elif option==620:
+        return 'Surviving Children'
+    elif option==900:
+        return 'Überlassungsmodell Direct Sales'
+#--------------------------------------
+    elif option==910:
+        return 'Joint Venture-Employees'
+    elif option==920:
+        return 'Re-hire Agreement'
+    elif option==950:
+        return 'User Cooperations'
+    elif option==998:
+        return 'Agency Worker'
+    elif option==999:
+        return 'Non-Employees'
+#--------------------------------------
     elif option==4:
         return 'Indirect'
     elif option==3:
@@ -779,5 +893,113 @@ def fixCombo(option):
         return 'Support'
     
 #------------------------------------------------------------------------------------------------------
+def getData():
+        conn = sqlite3.connect('database.sqlite')
+        con = conn.cursor()
+        data = []
+        con.execute("SELECT kim FROM AM_AW Where employee_group = ? AND employment_type= ?",[1,100])
+        rows5 = con.fetchall()
+        girl = 0
+        boy=0
+        for row in rows5:
+                con.execute(" SELECT gender FROM A_I WHERE kim =?",[row[0]])
+                out = con.fetchall()
+                if out[0][0] =='2':
+                        girl =girl+1
+                else:
+                        boy =boy+1
+        data.append({'boys':boy,'girls':girl})
 
+        con.execute("SELECT kim, employee_group,employment_type FROM AM_AW Where employee_group = ? AND employment_type= ?",[3,210])
+        rows4 = con.fetchall()
+        girl = 0
+        boy=0
+        for row in rows4:
+                con.execute(" SELECT gender FROM A_I WHERE kim =?",[row[0]])
+                out = con.fetchall()
+                if out[0][0] =='2':
+                        girl =girl+1
+                else:
+                        boy =boy+1
+        data.append({'boys':boy,'girls':girl})
+
+        con.execute("SELECT kim, employee_group,employment_type FROM AM_AW Where employee_group = ? AND employment_type= ?",[4,100])
+        rows3 = con.fetchall()
+        girl = 0
+        boy=0
+        for row in rows3:
+                con.execute(" SELECT gender FROM A_I WHERE kim =?",[row[0]])
+                out = con.fetchall()
+                if out[0][0] =='2':
+                        girl =girl+1
+                else:
+                        boy =boy+1
+        data.append({'boys':boy,'girls':girl})
+
+        con.execute("SELECT kim, employee_group,employment_type FROM AM_AW Where employee_group = ? AND employment_type= ?",[4,210])
+        rows1 = con.fetchall()
+        girl = 0
+        boy=0
+        for row in rows1:
+                con.execute(" SELECT gender FROM A_I WHERE kim =?",[row[0]])
+                out = con.fetchall()
+                if out[0][0] =='2':
+                        girl =girl+1
+                else:
+                        boy =boy+1
+        data.append({'boys':boy,'girls':girl})
+
+        con.execute("SELECT kim, employee_group,employment_type FROM AM_AW Where employee_group = ? AND employment_type= ?",[1,100])
+        rows6 = con.fetchall()
+        girl = 0
+        boy=0
+        for row in rows6:
+                con.execute(" SELECT gender FROM A_I WHERE kim =?",[row[0]])
+                out = con.fetchall()
+                if out[0][0] =='2':
+                        girl =girl+1
+                else:
+                        boy =boy+1
+        data.append({'boys':boy,'girls':girl})
+
+        con.execute("SELECT kim, employee_group,employment_type FROM AM_AW Where employee_group = ? AND employment_type= ?",[1,210])
+        rows7 = con.fetchall()
+        girl = 0
+        boy=0
+        for row in rows7:
+                con.execute(" SELECT gender FROM A_I WHERE kim =?",[row[0]])
+                out = con.fetchall()
+                if out[0][0] =='2':
+                        girl =girl+1
+                else:
+                        boy =boy+1
+        data.append({'boys':boy,'girls':girl})
+
+        con.execute("SELECT kim, employee_group,employment_type FROM AM_AW Where  employment_type= ?",[330])
+        rows8 = con.fetchall()
+        girl = 0
+        boy=0
+        for row in rows8:
+                con.execute(" SELECT gender FROM A_I WHERE kim =?",[row[0]])
+                out = con.fetchall()
+                if out[0][0] =='2':
+                        girl =girl+1
+                else:
+                        boy =boy+1
+        data.append({'boys':boy,'girls':girl})
+
+        con.execute("SELECT kim, employee_group,employment_type FROM AM_AW Where  employment_type= ?",[322])
+        rows9 = con.fetchall()
+        girl = 0
+        boy=0
+        for row in rows9:
+                con.execute(" SELECT gender FROM A_I WHERE kim =?",[row[0]])
+                out = con.fetchall()
+                if out[0][0] =='2':
+                        girl =girl+1
+                else:
+                        boy =boy+1
+        data.append({'boys':boy,'girls':girl})
+        return data
+#------------------------------------------------------------------------------------------------------
 

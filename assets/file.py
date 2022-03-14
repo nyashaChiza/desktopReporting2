@@ -9,19 +9,13 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import os
-from database import *
 
-from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1250, 900)
+        MainWindow.resize(1352, 874)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("icon/Petalm-logo.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        MainWindow.setWindowIcon(icon)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -30,7 +24,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1197, 1172))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1307, 1172))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
@@ -41,9 +35,16 @@ class Ui_MainWindow(object):
         self.widget.setObjectName("widget")
         self.tabWidget = QtWidgets.QTabWidget(self.widget)
         self.tabWidget.setEnabled(True)
-        self.tabWidget.setGeometry(QtCore.QRect(130, 40, 931, 991))
+        self.tabWidget.setGeometry(QtCore.QRect(110, 50, 1011, 991))
+        font = QtGui.QFont()
+        font.setFamily("Calibri Light")
+        font.setPointSize(10)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(3)
+        self.tabWidget.setFont(font)
         self.tabWidget.setContextMenuPolicy(QtCore.Qt.NoContextMenu)
-        self.tabWidget.setStyleSheet("font: 12pt \"Arial Rounded MT Bold\";\n"
+        self.tabWidget.setStyleSheet("font: 25 10pt \"Calibri Light\";\n"
 "background-color: rgb(255, 255, 255);\n"
 "border-width:2px;")
         self.tabWidget.setTabPosition(QtWidgets.QTabWidget.North)
@@ -72,12 +73,12 @@ class Ui_MainWindow(object):
         self.label = QtWidgets.QLabel(self.Reports)
         self.label.setGeometry(QtCore.QRect(120, 220, 71, 41))
         self.label.setStyleSheet("\n"
-"font: 16pt \"Berlin Sans FB\";")
+"font: 25 10pt \"Calibri Light\";")
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(self.Reports)
         self.label_2.setGeometry(QtCore.QRect(120, 330, 61, 41))
         self.label_2.setStyleSheet("\n"
-"font: 16pt \"Berlin Sans FB\";")
+"font: 25 10pt \"Calibri Light\";")
         self.label_2.setObjectName("label_2")
         self.to = QtWidgets.QDateEdit(self.Reports)
         self.to.setGeometry(QtCore.QRect(210, 330, 521, 41))
@@ -146,12 +147,12 @@ class Ui_MainWindow(object):
         self.kim.setClearButtonEnabled(True)
         self.kim.setObjectName("kim")
         self.lname = QtWidgets.QLineEdit(self.tab_2)
-        self.lname.setGeometry(QtCore.QRect(480, 220, 371, 41))
+        self.lname.setGeometry(QtCore.QRect(480, 230, 371, 41))
         self.lname.setDragEnabled(True)
         self.lname.setClearButtonEnabled(True)
         self.lname.setObjectName("lname")
         self.fname = QtWidgets.QLineEdit(self.tab_2)
-        self.fname.setGeometry(QtCore.QRect(90, 220, 351, 41))
+        self.fname.setGeometry(QtCore.QRect(90, 230, 351, 41))
         self.fname.setDragEnabled(True)
         self.fname.setClearButtonEnabled(True)
         self.fname.setObjectName("fname")
@@ -162,62 +163,52 @@ class Ui_MainWindow(object):
         self.gender.addItem("")
         self.gender.addItem("")
         self.personal_number = QtWidgets.QLineEdit(self.tab_2)
-        self.personal_number.setGeometry(QtCore.QRect(80, 480, 351, 41))
+        self.personal_number.setGeometry(QtCore.QRect(90, 410, 351, 41))
         self.personal_number.setDragEnabled(True)
         self.personal_number.setCursorMoveStyle(QtCore.Qt.VisualMoveStyle)
         self.personal_number.setClearButtonEnabled(True)
         self.personal_number.setObjectName("personal_number")
-        self.label_5 = QtWidgets.QLabel(self.tab_2)
-        self.label_5.setGeometry(QtCore.QRect(90, 290, 111, 31))
-        self.label_5.setStyleSheet("\n"
-"font: 14pt \"Berlin Sans FB\";")
-        self.label_5.setObjectName("label_5")
-        self.label_6 = QtWidgets.QLabel(self.tab_2)
-        self.label_6.setGeometry(QtCore.QRect(90, 350, 161, 31))
-        self.label_6.setStyleSheet("\n"
-"font: 14pt \"Berlin Sans FB\";")
-        self.label_6.setObjectName("label_6")
         self.report = QtWidgets.QLineEdit(self.tab_2)
-        self.report.setGeometry(QtCore.QRect(480, 620, 371, 41))
+        self.report.setGeometry(QtCore.QRect(480, 550, 371, 41))
         self.report.setDragEnabled(True)
         self.report.setClearButtonEnabled(True)
         self.report.setObjectName("report")
         self.email = QtWidgets.QLineEdit(self.tab_2)
-        self.email.setGeometry(QtCore.QRect(80, 620, 351, 41))
+        self.email.setGeometry(QtCore.QRect(90, 550, 351, 41))
         self.email.setDragEnabled(True)
         self.email.setClearButtonEnabled(True)
         self.email.setObjectName("email")
         self.current_position = QtWidgets.QLineEdit(self.tab_2)
-        self.current_position.setGeometry(QtCore.QRect(80, 690, 351, 41))
+        self.current_position.setGeometry(QtCore.QRect(90, 620, 351, 41))
         self.current_position.setDragEnabled(True)
         self.current_position.setClearButtonEnabled(True)
         self.current_position.setObjectName("current_position")
         self.pushButton_3 = QtWidgets.QPushButton(self.tab_2)
-        self.pushButton_3.setGeometry(QtCore.QRect(110, 780, 321, 51))
+        self.pushButton_3.setGeometry(QtCore.QRect(110, 760, 321, 51))
         self.pushButton_3.setStyleSheet("background-color: rgb(0, 71, 0);\n"
 "color: rgb(255, 255, 255);\n"
 "border-radius:8px;")
         self.pushButton_3.setCheckable(True)
         self.pushButton_3.setObjectName("pushButton_3")
         self.pushButton_4 = QtWidgets.QPushButton(self.tab_2)
-        self.pushButton_4.setGeometry(QtCore.QRect(470, 780, 311, 51))
+        self.pushButton_4.setGeometry(QtCore.QRect(480, 760, 311, 51))
         self.pushButton_4.setStyleSheet("background-color: rgb(0, 0, 118);\n"
 "color: rgb(255, 255, 255);\n"
 "border-radius:8px;")
         self.pushButton_4.setFlat(True)
         self.pushButton_4.setObjectName("pushButton_4")
         self.line_9 = QtWidgets.QFrame(self.tab_2)
-        self.line_9.setGeometry(QtCore.QRect(70, 750, 741, 16))
+        self.line_9.setGeometry(QtCore.QRect(70, 730, 831, 20))
         self.line_9.setFrameShape(QtWidgets.QFrame.HLine)
         self.line_9.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_9.setObjectName("line_9")
         self.line_10 = QtWidgets.QFrame(self.tab_2)
-        self.line_10.setGeometry(QtCore.QRect(70, 850, 751, 16))
+        self.line_10.setGeometry(QtCore.QRect(70, 830, 831, 16))
         self.line_10.setFrameShape(QtWidgets.QFrame.HLine)
         self.line_10.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_10.setObjectName("line_10")
         self.birthday = QtWidgets.QDateEdit(self.tab_2)
-        self.birthday.setGeometry(QtCore.QRect(480, 290, 371, 31))
+        self.birthday.setGeometry(QtCore.QRect(480, 300, 371, 31))
         self.birthday.setSpecialValueText("")
         self.birthday.setCalendarPopup(True)
         self.birthday.setDate(QtCore.QDate(2022, 1, 1))
@@ -229,14 +220,14 @@ class Ui_MainWindow(object):
         self.date_of_entry.setDate(QtCore.QDate(2022, 1, 1))
         self.date_of_entry.setObjectName("date_of_entry")
         self.employee_group = QtWidgets.QComboBox(self.tab_2)
-        self.employee_group.setGeometry(QtCore.QRect(480, 480, 371, 41))
+        self.employee_group.setGeometry(QtCore.QRect(480, 410, 371, 41))
         self.employee_group.setObjectName("employee_group")
         self.employee_group.addItem("")
         self.employee_group.addItem("")
         self.employee_group.addItem("")
         self.employee_group.addItem("")
         self.hr_level = QtWidgets.QComboBox(self.tab_2)
-        self.hr_level.setGeometry(QtCore.QRect(80, 550, 351, 41))
+        self.hr_level.setGeometry(QtCore.QRect(90, 480, 351, 41))
         self.hr_level.setObjectName("hr_level")
         self.hr_level.addItem("")
         self.hr_level.addItem("")
@@ -245,26 +236,15 @@ class Ui_MainWindow(object):
         self.hr_level.addItem("")
         self.hr_level.addItem("")
         self.nationality = QtWidgets.QComboBox(self.tab_2)
-        self.nationality.setGeometry(QtCore.QRect(480, 690, 371, 41))
+        self.nationality.setGeometry(QtCore.QRect(480, 620, 371, 41))
         self.nationality.setObjectName("nationality")
         self.nationality.addItem("")
         self.nationality.addItem("")
         self.nationality.addItem("")
         self.nationality.addItem("")
         self.nationality.addItem("")
-        self.date_of_contract_end_2 = QtWidgets.QDateEdit(self.tab_2)
-        self.date_of_contract_end_2.setGeometry(QtCore.QRect(480, 410, 371, 31))
-        self.date_of_contract_end_2.setSpecialValueText("")
-        self.date_of_contract_end_2.setCalendarPopup(True)
-        self.date_of_contract_end_2.setDate(QtCore.QDate(2022, 1, 1))
-        self.date_of_contract_end_2.setObjectName("date_of_contract_end_2")
-        self.label_12 = QtWidgets.QLabel(self.tab_2)
-        self.label_12.setGeometry(QtCore.QRect(110, 410, 251, 31))
-        self.label_12.setStyleSheet("\n"
-"font: 14pt \"Berlin Sans FB\";")
-        self.label_12.setObjectName("label_12")
         self.employement_type = QtWidgets.QComboBox(self.tab_2)
-        self.employement_type.setGeometry(QtCore.QRect(480, 550, 371, 31))
+        self.employement_type.setGeometry(QtCore.QRect(480, 480, 371, 41))
         self.employement_type.setObjectName("employement_type")
         self.employement_type.addItem("")
         self.employement_type.addItem("")
@@ -299,6 +279,12 @@ class Ui_MainWindow(object):
         self.employement_type.addItem("")
         self.employement_type.addItem("")
         self.employement_type.addItem("")
+        self.label_12 = QtWidgets.QLabel(self.tab_2)
+        self.label_12.setGeometry(QtCore.QRect(90, 290, 101, 41))
+        self.label_12.setObjectName("label_12")
+        self.label_14 = QtWidgets.QLabel(self.tab_2)
+        self.label_14.setGeometry(QtCore.QRect(90, 360, 151, 21))
+        self.label_14.setObjectName("label_14")
         self.tabWidget.addTab(self.tab_2, "")
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
@@ -344,16 +330,6 @@ class Ui_MainWindow(object):
         self.birthday_2.setCalendarPopup(True)
         self.birthday_2.setDate(QtCore.QDate(2022, 1, 1))
         self.birthday_2.setObjectName("birthday_2")
-        self.label_8 = QtWidgets.QLabel(self.tab)
-        self.label_8.setGeometry(QtCore.QRect(70, 330, 111, 31))
-        self.label_8.setStyleSheet("\n"
-"font: 14pt \"Berlin Sans FB\";")
-        self.label_8.setObjectName("label_8")
-        self.label_9 = QtWidgets.QLabel(self.tab)
-        self.label_9.setGeometry(QtCore.QRect(70, 380, 171, 31))
-        self.label_9.setStyleSheet("\n"
-"font: 14pt \"Berlin Sans FB\";")
-        self.label_9.setObjectName("label_9")
         self.date_of_entry_2 = QtWidgets.QDateEdit(self.tab)
         self.date_of_entry_2.setGeometry(QtCore.QRect(460, 380, 391, 31))
         self.date_of_entry_2.setSpecialValueText("")
@@ -514,10 +490,14 @@ class Ui_MainWindow(object):
         self.date_of_contract_end.setCalendarPopup(True)
         self.date_of_contract_end.setDate(QtCore.QDate(2022, 1, 1))
         self.date_of_contract_end.setObjectName("date_of_contract_end")
+        self.label_8 = QtWidgets.QLabel(self.tab)
+        self.label_8.setGeometry(QtCore.QRect(80, 340, 101, 41))
+        self.label_8.setObjectName("label_8")
+        self.label_9 = QtWidgets.QLabel(self.tab)
+        self.label_9.setGeometry(QtCore.QRect(80, 390, 151, 21))
+        self.label_9.setObjectName("label_9")
         self.label_11 = QtWidgets.QLabel(self.tab)
-        self.label_11.setGeometry(QtCore.QRect(70, 430, 251, 31))
-        self.label_11.setStyleSheet("\n"
-"font: 14pt \"Berlin Sans FB\";")
+        self.label_11.setGeometry(QtCore.QRect(80, 430, 171, 21))
         self.label_11.setObjectName("label_11")
         self.tabWidget.addTab(self.tab, "")
         self.tab_3 = QtWidgets.QWidget()
@@ -580,12 +560,12 @@ class Ui_MainWindow(object):
         self.date_of_leaving_group = QtWidgets.QLabel(self.tab_3)
         self.date_of_leaving_group.setGeometry(QtCore.QRect(90, 450, 231, 41))
         self.date_of_leaving_group.setStyleSheet("\n"
-"font: 14pt \"Berlin Sans FB\";")
+"font: 25 10pt \"Calibri Light\";")
         self.date_of_leaving_group.setObjectName("date_of_leaving_group")
         self.date_of_leaving_group_2 = QtWidgets.QLabel(self.tab_3)
         self.date_of_leaving_group_2.setGeometry(QtCore.QRect(90, 510, 281, 41))
         self.date_of_leaving_group_2.setStyleSheet("\n"
-"font: 14pt \"Berlin Sans FB\";")
+"font: 25 10pt \"Calibri Light\";")
         self.date_of_leaving_group_2.setObjectName("date_of_leaving_group_2")
         self.reason_for_leaving = QtWidgets.QComboBox(self.tab_3)
         self.reason_for_leaving.setGeometry(QtCore.QRect(380, 510, 391, 41))
@@ -674,7 +654,7 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.scrollArea)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1242, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1352, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -706,8 +686,6 @@ class Ui_MainWindow(object):
         self.gender.setItemText(1, _translate("MainWindow", "Male"))
         self.gender.setItemText(2, _translate("MainWindow", "Female"))
         self.personal_number.setPlaceholderText(_translate("MainWindow", "7. Personal Number"))
-        self.label_5.setText(_translate("MainWindow", "5. Birthday:"))
-        self.label_6.setText(_translate("MainWindow", "6. Date of Entry:"))
         self.report.setPlaceholderText(_translate("MainWindow", "12. Report To KIM"))
         self.email.setPlaceholderText(_translate("MainWindow", "11. SMTP Email-Address"))
         self.current_position.setPlaceholderText(_translate("MainWindow", "13. Current Position Title"))
@@ -726,36 +704,10 @@ class Ui_MainWindow(object):
         self.hr_level.setItemText(4, _translate("MainWindow", "062"))
         self.hr_level.setItemText(5, _translate("MainWindow", "071"))
         self.nationality.setItemText(0, _translate("MainWindow", "14. Nationality"))
-        self.nationality.setItemText(1, _translate("MainWindow", "AF"))
-        self.nationality.setItemText(2, _translate("MainWindow", "AX"))
-        self.nationality.setItemText(3, _translate("MainWindow", "AU"))
-        self.nationality.setItemText(3, _translate("MainWindow", "AL"))
-        self.nationality.setItemText(4, _translate("MainWindow", "DZ"))
-        self.nationality.addItems([ "AS", "AD", "AO", "AI", "AQ", "AG", "AR",
-"AM", "AW", "AU", "AT", "AZ", "BS", "BH", "BD", "BB", "BY", "BE",
-"BZ", "BJ", "BM", "BT", "BO", "BQ", "BA", "BW", "BV", "BR", "IO",
-"BN", "BG", "BF", "BI", "CV", "KH", "CM", "CA", "KY", "CF", "TD",
-"CL", "CN", "CX", "CC", "CO", "KM", "CG", "CD", "CK", "CR", "CI",
-"HR", "CU", "CW", "CY", "CZ", "DK", "DJ", "DM", "DO", "EC", "EG",
-"SV", "GQ", "ER", "EE", "ET", "FK", "FO", "FJ", "FI", "FR", "GF",
-"PF", "TF", "GA", "GM", "GE", "DE", "GH", "GI", "GR", "GL", "GD",
-"GP", "GU", "GT", "GG", "GN", "GW", "GY", "HT", "HM", "VA", "HN",
-"HK", "HU", "IS", "IN", "ID", "IR", "IQ", "IE", "IM", "IL", "IT",
-"JM", "JP", "JE", "JO", "KZ", "KE", "KI", "KP", "KR", "KW", "KG",
-"LA", "LV", "LB", "LS", "LR", "LY", "LI", "LT", "LU", "MO", "MK",
-"MG", "MW", "MY", "MV", "ML", "MT", "MH", "MQ", "MR", "MU", "YT",
-"MX", "FM", "MD", "MC", "MN", "ME", "MS", "MA", "MZ", "MM", "NA",
-"NR", "NP", "NL", "NC", "NZ", "NI", "NE", "NG", "NU", "NF", "MP",
-"NO", "OM", "PK", "PW", "PS", "PA", "PG", "PY", "PE", "PH", "PN",
-"PL", "PT", "PR", "QA", "RE", "RO", "RU", "RW", "BL", "SH", "KN",
-"LC", "MF", "PM", "VC", "WS", "SM", "ST", "SA", "SN", "RS", "SC",
-"SL", "SG", "SX", "SK", "SI", "SB", "SO", "ZA", "GS", "SS", "ES",
-"LK", "SD", "SR", "SJ", "SZ", "SE", "CH", "SY", "TW", "TJ", "TZ",
-"TH", "TL", "TG", "TK", "TO", "TT", "TN", "TR", "TM", "TC", "TV",
-"UG", "UA", "AE", "GB", "US", "UM", "UY", "UZ", "VU", "VE", "VN",
-"VG", "VI", "WF", "EH", "YE", "ZM", "ZW"])
-        self.date_of_contract_end_2.setDisplayFormat(_translate("MainWindow", "yyyy-MM-dd"))
-        self.label_12.setText(_translate("MainWindow", "Date of Contract End"))
+        self.nationality.setItemText(1, _translate("MainWindow", "za"))
+        self.nationality.setItemText(2, _translate("MainWindow", "den"))
+        self.nationality.setItemText(3, _translate("MainWindow", "ger"))
+        self.nationality.setItemText(4, _translate("MainWindow", "zw"))
         self.employement_type.setItemText(0, _translate("MainWindow", "10. Nature of Contract"))
         self.employement_type.setItemText(1, _translate("MainWindow", "Permanent Employees"))
         self.employement_type.setItemText(2, _translate("MainWindow", "Host Based"))
@@ -789,6 +741,8 @@ class Ui_MainWindow(object):
         self.employement_type.setItemText(30, _translate("MainWindow", "User Cooperations"))
         self.employement_type.setItemText(31, _translate("MainWindow", "Agency Worker"))
         self.employement_type.setItemText(32, _translate("MainWindow", "Non-Employees"))
+        self.label_12.setText(_translate("MainWindow", "5. Birthday:"))
+        self.label_14.setText(_translate("MainWindow", "6. Date of Entry:"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Add Employee"))
         self.label_7.setText(_translate("MainWindow", "Please Enter The Following"))
         self.kim_2.setPlaceholderText(_translate("MainWindow", " *1. Enter The Employee\'s KIM"))
@@ -798,8 +752,6 @@ class Ui_MainWindow(object):
         self.fname_2.setPlaceholderText(_translate("MainWindow", "3. First Name "))
         self.lname_2.setPlaceholderText(_translate("MainWindow", "4. Last Name"))
         self.birthday_2.setDisplayFormat(_translate("MainWindow", "yyyy-MM-dd"))
-        self.label_8.setText(_translate("MainWindow", "5. Birthday:"))
-        self.label_9.setText(_translate("MainWindow", "6. Date of Entry:"))
         self.date_of_entry_2.setDisplayFormat(_translate("MainWindow", "yyyy-MM-dd"))
         self.personal_number_2.setPlaceholderText(_translate("MainWindow", "7. Personal Number"))
         self.email_2.setPlaceholderText(_translate("MainWindow", "11. SMTP Email-Address"))
@@ -852,7 +804,9 @@ class Ui_MainWindow(object):
         self.employement_type_2.setItemText(31, _translate("MainWindow", "Agency Worker"))
         self.employement_type_2.setItemText(32, _translate("MainWindow", "Non-Employees"))
         self.date_of_contract_end.setDisplayFormat(_translate("MainWindow", "yyyy-MM-dd"))
-        self.label_11.setText(_translate("MainWindow", "Date of Contract End"))
+        self.label_8.setText(_translate("MainWindow", "5. Birthday:"))
+        self.label_9.setText(_translate("MainWindow", "6. Date of Entry:"))
+        self.label_11.setText(_translate("MainWindow", "7. Date of Contract End"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Update Employee"))
         self.label_10.setText(_translate("MainWindow", "Please Enter The Following"))
         self.kim_3.setPlaceholderText(_translate("MainWindow", " * Enter The Employee\'s KIM"))
@@ -878,212 +832,11 @@ class Ui_MainWindow(object):
         self.saveButton2.setText(_translate("MainWindow", "Save Report"))
         self.openButton_2.setText(_translate("MainWindow", "Open Reports"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), _translate("MainWindow", "Headcount Report"))
-#------------------------------------- Functionality Mod End----------------------------------------#
-        self.pushButton_3.clicked.connect(self.saveInformation)
-        self.pushButton_4.clicked.connect(self.clear)
-        self.pushButton_5.clicked.connect(self.update)
-        self.pushButton_6.clicked.connect(self.clear2)
-        self.saveButton.clicked.connect(self.reports)
-        self.saveButton2.clicked.connect(self.reports2)
-        self.openButton.clicked.connect(self.openFunction)
-        self.openButton_2.clicked.connect(self.openFunction2)
-        self.search.clicked.connect(self.search_emp)
-        self.search_2.clicked.connect(self.searchEmp)
-        self.saveButton1.clicked.connect(self.terminateEmployee)
-#------------------------------------- Functionality Mod End----------------------------------------#
 
-#----------------------------------------------------------------------------------------------------------
-    def search_emp(self):
-        kim = self.kim_2.text()
-        if find_employee(kim) ==1:
-                if collect_data(kim) != None:
-                        data = collect_data(kim)
-                        print('date:',data.get('contract_end'))
-                        self.genderText.setText(fixCombo(data.get('gender')))
-                        self.fname_2.setText(data.get('name'))
-                        self.lname_2.setText(data.get('surname'))
-                        cv =[int(str(data.get('birthday')[4])+str(data.get('birthday')[5])+str(data.get('birthday')[6])+str(data.get('birthday')[7])),int(str(data.get('birthday')[2])+str(data.get('birthday')[4])),int(str(data.get('birthday')[0])+str(data.get('birthday')[1]))]
-                        self.birthday_2.setDate(QtCore.QDate(cv[0],cv[1],cv[2]))
-                        cv =[int(str(data.get('date')[4])+str(data.get('date')[5])+str(data.get('date')[6])+str(data.get('date')[7])),int(str(data.get('date')[2])+str(data.get('date')[4])),int(str(data.get('date')[0])+str(data.get('date')[1]))]
-                        self.date_of_entry_2.setDate(QtCore.QDate(cv[0],cv[1],cv[2]))
-                        try:
-                                cv =[int(str(data.get('contract_end')[4])+str(data.get('contract_end')[5])+str(data.get('contract_end')[6])+str(data.get('contract_end')[7])),int(str(data.get('contract_end')[2])+str(data.get('contract_end')[4])),int(str(data.get('contract_end')[0])+str(data.get('contract_end')[1]))]
-                                self.date_of_contract_end.setDate(QtCore.QDate(cv[0],cv[1],cv[2]))
-                        except Exception as e:
-                                print(e)
-                                self.date_of_contract_end.setDate(QtCore.QDate(2022,1,1))
-                        self.personal_number_2.setText(data.get('pnum'))
-                        self.egText.setText(fixCombo(data.get('eg')))
-                        self.joblevelText.setText(fixCombo(data.get('hr')))
-                        self.contractText.setText(fixCombo(data.get('et')))
-                        self.email_2.setText(data.get('email'))
-                        self.report_2.setText(data.get('report'))
-                        self.current_position_2.setText(data.get('position'))
-        else:
-                return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Could Not Find Employee')
-#----------------------------------------------------------------------------------------------------------
-    def update(self):
-            if len(self.kim_2.text()) == 0 or len(self.fname_2.text())== 0 or len(self.current_position_2.text()) == 0 or len(self.report_2.text())== 0 or  len(self.personal_number_2.text()) == 0:
-                return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Please Provide Responses For All The Fields')
-            kim = 0
-            kim = str(self.kim_2.text())
-            if find_employee(kim) ==1:
-                data = {
-                'kim': fix_input('kim',self.kim_2.text()),
-                'gender':comboFix('gender',self.gender_2.currentText()),
-                'fname':fix_input('fn',self.fname_2.text()),
-                'lname':fix_input('ln',self.lname_2.text()),
-                'bdate':dateCheck1(self.birthday_2.text()),
-                'date_of_entry':dateCheck1(self.date_of_entry_2.text()),
-                'date_of_contract_end':dateCheck1(self.date_of_contract_end.text()),
-                'pnumber':fix_input('pn',self.personal_number_2.text()),
-                'employee_group':fix_input('eg',comboFix('area',self.employee_group_2.currentText())),
-                'hr_level':fix_input('hr',self.hr_level_2.currentText()),
-                'email':fix_input('email',self.email_2.text()),
-                'etype':fix_input('et',comboFix('contract',self.employement_type_2.currentText())),
-                'report':fix_input('rk',self.report_2.text()),
-                'current_position':fix_input('pos',self.current_position_2.text())
-                }
-                print(data)
-                if updateInfo(data) == 1:
-                        return QtWidgets.QMessageBox.about(self.tabWidget,'Success','Employee Information Updated Successfully')
-                else:
-                         return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Information Could Not Be Saved')
-            else:
-                return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Could Not Find Employee')
-#---------------------------------------------------------------------------------------------------------------------
-    def searchEmp(self):
-        kim = self.kim_3.text()
-        if find_employee(kim) ==1:
-                data = collect_data2(kim)
-                print(data)
-                if data != None:
-                        self.nameText.setText(data.get('name'))
-                        self.surnnameText.setText(data.get('surname'))
-                else:
-                        return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Could Not Find Employee')
-        else:
-                                return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Could Not Find The Employee')
-#---------------------------------------------------------------------------------------------------------------------
-    def terminateEmployee(self):
-        kim = self.kim_3.text()
-        if find_employee(kim) ==1:
-                if collect_data2(kim) != None:
-                        data = collect_data(kim)
-                        self.nameText.setText(data.get('name'))
-                        self.surnnameText.setText(data.get('surname'))
-                        date = dateCheck1(self.date_of_leaving.text())
-                        reason = self.reason_for_leaving.currentText()
-                        data = {'kim':kim,'date':date,'reason':comboFix('reason',reason)}
-                        if terminate(data)== 1:
-                                return QtWidgets.QMessageBox.about(self.tabWidget,'Success','Employee Terminated Successfully')
-                        else:
-                                return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Could Not Terminate Employee')
-                else:
-                        return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Could Not Find Employee')
-        else:
-                                return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Could Not Find The Employee')
-#---------------------------------------------------------------------------------------------------------------------
-    def openFunction(self):
-            path = os.path.abspath('Reports')
-            return QtWidgets.QFileDialog.getOpenFileName(self.tabWidget,'Open A Report:',path, filter = 'Files (*.txt )')
-#---------------------------------------------------------------------------------------------------------------------
-    def openFunction2(self):
-            path = os.path.abspath('Reports2')
-            return QtWidgets.QFileDialog.getOpenFileName(self.tabWidget,'Open A Headcount Report:',path, filter = 'Files (*.xlsx )')
-#---------------------------------------------------------------------------------------------------------------------
 
-    def clear(self):
-        #    loadInfo()
-            self.kim.clear()
-            self.fname.clear()
-            self.lname.clear()
-            self.birthday.setDate(QtCore.QDate(2022, 1, 1))
-            self.date_of_entry.setDate(QtCore.QDate(2022, 1, 1))
-            self.personal_number.clear()
-            self.email.clear()
-            self.report.clear()
-            self.current_position.clear()
-#---------------------------------------------------------------------------------------------------------------------
-    def clear2(self):
-        #    loadInfo()
-            self.kim_2.clear()
-            self.fname_2.clear()
-            self.lname_2.clear()
-            self.birthday_2.setDate(QtCore.QDate(2022, 1, 1))
-            self.date_of_entry_2.setDate(QtCore.QDate(2022, 1, 1))
-            self.personal_number_2.clear()
-            self.email_2.clear()
-            self.report_2.clear()
-            self.current_position_2.clear()
-            self.egText.setText(' ')
-            self.joblevelText.setText(' ')
-            self.contractText.setText(' ')
-            self.genderText.setText(' ')
-#---------------------------------------------------------------------------------------------------------------------
-    def saveInformation(self):
-                if find_employee(self.kim.text()) ==1:
-                    return QtWidgets.QMessageBox.about(self.tabWidget,'Error','KIM Number Already Exists')
-    
-                if len(self.kim.text()) == 0 or len(self.fname.text())== 0 or len(self.current_position.text()) == 0 or len(self.report.text())== 0 or  len(self.personal_number.text()) == 0:
-                    return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Please Provide Responses For All The Fields')
-                if  not check_kim(len(self.kim.text())) or not check_kim(len(self.report.text())) :
-                            return QtWidgets.QMessageBox.about(self.tabWidget,'Error','KIM should be 15 characters long')
-                data = {
-                'kim': fix_input('kim',self.kim.text()),
-                'gender':comboFix('gender',self.gender.currentText()),
-                'fname':fix_input('fn',self.fname.text()),
-                'lname':fix_input('ln',self.lname.text()),
-                'bdate':dateCheck1(self.birthday.text()),
-                'date_of_contract_end':dateCheck1(self.date_of_contract_end_2.text()),
-                'date_of_entry':dateCheck1(self.date_of_entry.text()),
-                'personal_number':fix_value(self.personal_number.text()),
-                'employee_group':fix_input('eg',comboFix('area',self.employee_group.currentText())),
-                'etype':fix_input('et',comboFix('contract',self.employement_type.currentText())),
-                'nationality':fix_input('nat',self.nationality.currentText()),
-                'hr_level':fix_input('hr',comboFix('job',self.hr_level.currentText())),
-                'temail': fix_input('email',self.email.text()),
-                'report':fix_input('rk',self.report.text()),
-                'position':fix_input('pos',self.current_position.text())
-                }
-                print(data)
-                if saveInfo(data) ==1:
-                        return QtWidgets.QMessageBox.about(self.tabWidget,'Success','Employee Information Saved Successfully')
-                else:
-                       return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Information Could Not Be Saved')
-#---------------------------------------------------------------------------------------------------------------------
-    def reports2(self):
-            if len(self.title_2.text()) == 0 :
-                return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Please Provide Responses For All The Fields')
-            data= {
-                'title':self.title_2.text(),
-                          }
-            if gen2(self.title_2.text()) >0:
-                        return QtWidgets.QMessageBox.about(self.tabWidget,'Success','Report Generated Saved Successfully')
-            else:
-                        return QtWidgets.QMessageBox.about(self.tabWidget,'Error','No Data Was Saved During This Period')
-
-#---------------------------------------------------------------------------------------------------------------------
-    def reports(self):
-            if len(self.title.text()) == 0:
-                return QtWidgets.QMessageBox.about(self.tabWidget,'Error','Please Provide Responses For All The Fields')
-            data= {
-                'title':self.title.text(),
-                'from':self.ffrom.text(),
-                'to':self.to.text(),
-                'spacing':int(0),
-            }
-            if gen(generate_report(data.get('from'),data.get('to')),data.get('title')) >0:
-                        return QtWidgets.QMessageBox.about(self.tabWidget,'Success','Report Generated Saved Successfully')
-            else:
-                        return QtWidgets.QMessageBox.about(self.tabWidget,'Error','No Data Was Saved During This Period')
-#---------------------------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    if not createConnection("database.sqlite"):
-        sys.exit(1)
-    app.setStyle('fusion')
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
